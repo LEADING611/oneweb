@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+  <title>领航教育｜初高中物理培优·模型化解题</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(135deg, #eaf4ff 0%, #ffffff 38%, #dbeafe 72%, #ffffff 100%);
+      background-attachment: fixed;
+      color: #111827;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+   
+    .nav {
+      position: sticky;
+      top: 8px;
+      margin: 0 auto;
+      width: calc(100% - 16px);
+      max-width: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65)) !important;
+      backdrop-filter: saturate(200%) blur(24px) !important;
+      -webkit-backdrop-filter: saturate(200%) blur(24px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.6) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      z-index: 100;
+      overflow: visible;
+      transition: all 0.3s ease;
+    }
+
+    .nav.scrolled {
+      top: 4px;
+      transform: scale(0.98);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.75)) !important;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+    }
+
+    .navin {
+      height: 52px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav strong {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    /* 桌面菜单隐藏，手机汉堡按钮 */
+    .menu {
+      display: none;
+    }
+
+    /* 汉堡按钮 */
+    .mobile-menu-btn {
+      display: flex;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 40px;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s ease;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .mobile-menu-btn:active {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(0.96);
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 20px;
+      height: 2.5px;
+      background-color: #1e293b;
+      transition: all 0.25s ease;
+      border-radius: 4px;
+    }
+
+    /* 侧边栏抽屉 */
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 260px;
+      max-width: 75vw;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      box-shadow: -4px 0 32px rgba(0, 0, 0, 0.15);
+      z-index: 1001;
+      transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .drawer-close {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #334155;
+    }
+
+    .drawer-close:active {
+      background: rgba(0, 0, 0, 0.12);
+      transform: scale(0.95);
+    }
+
+    .drawer a {
+      font-size: 20px;
+      font-weight: 500;
+      color: #1e293b;
+      padding: 14px 16px;
+      border-radius: 14px;
+      transition: all 0.2s;
+      margin: 2px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drawer a:active {
+      background: rgba(37, 99, 235, 0.12);
+      color: #2563eb;
+      transform: translateX(4px);
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .drawer-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    body.drawer-open {
+      overflow: hidden;
+    }
+
+    .nav-scroll-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #2563eb, #60a5fa);
+      width: 0%;
+      transition: width 0.05s linear;
+      z-index: 101;
+      border-radius: 0 0 16px 16px;
+    }
+
+    /* 英雄区优化 (保持原风格但适配手机) */
+    .hero {
+      padding: 60px 0 70px;
+      text-align: center;
+      position: relative;
+    }
+    .eyebrow {
+      color: #2563eb;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: 38px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .hero p {
+      max-width: 100%;
+      margin: 0 auto 28px;
+      color: #6e6e73;
+      font-size: 17px;
+      line-height: 1.4;
+      padding: 0 8px;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 22px;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 16px;
+      display: inline-block;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+    .primary {
+      background: #0071e3;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25);
+    }
+    .primary:active {
+      transform: scale(0.96);
+    }
+    .secondary {
+      background: #fff;
+      border: 1px solid #d2d2d7;
+    }
+    .secondary:active {
+      background: #f5f5f7;
+      transform: scale(0.96);
+    }
+
+    /* 通用区块 */
+    .section {
+      padding: 60px 0;
+    }
+    .title {
+      font-size: 32px;
+      letter-spacing: -0.03em;
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .sub {
+      max-width: 100%;
+      margin: 0 auto 32px;
+      text-align: center;
+      color: #6e6e73;
+      font-size: 16px;
+      line-height: 1.4;
+      padding: 0 12px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .card {
+      background: linear-gradient(180deg, #ffffff, #fbfbfd);
+      border: 1px solid #eef0f3;
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:active {
+      transform: scale(0.98);
+    }
+    .physics-symbol {
+      font-size: 34px;
+      font-weight: 800;
+      color: #2563eb;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .card p {
+      color: #4b5563;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* 教师卡片 (保持原物理样式但手机紧凑) */
+    .teacher-spotlight {
+      background: linear-gradient(180deg, #ffffff, #fbfbfd);
+      border: 1px solid #eef0f3;
+      border-radius: 28px;
+      padding: 28px 20px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+    }
+    .teacher-avatar {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: #2563eb;
+      box-shadow: 0 15px 30px rgba(37, 99, 235, 0.1);
+      margin: 0 auto;
+    }
+    .teacher-info {
+      flex: 1;
+      text-align: left;  /* 修改为左对齐 */
+    }
+    .teacher-info h3 {
+      font-size: 24px;
+      font-weight: 700;
+      text-align: left;  /* 左对齐 */
+    }
+    .teacher-info .role {
+      color: #2563eb;
+      font-weight: 600;
+      margin: 8px 0 12px;
+      font-size: 14px;
+      text-align: left;  /* 左对齐 */
+    }
+    .teacher-info .desc {
+      color: #475569;
+      max-width: 100%;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: left;  /* 左对齐 */
+    }
+
+    /* 物理特色列表 */
+    .feature-list {
+      background: #f9fafc;
+      border-radius: 28px;
+      padding: 28px 20px;
+      border: 1px solid #e9ebf0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      font-size: 16px;
+    }
+    .feature-icon {
+      font-size: 20px;
+      color: #2563eb;
+      min-width: 28px;
+      text-align: center;
+    }
+
+    /* 联系区块 */
+    .contact-panel {
+      background: linear-gradient(180deg, #ffffff, #fbfbfd);
+      border-radius: 32px;
+      padding: 40px 24px;
+      text-align: center;
+      border: 1px solid #eef0f3;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+    }
+    .contact-panel h2 {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+    .footer {
+      padding: 28px 16px;
+      color: #64748b;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 20px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* 入场动画 */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 辅助微交互 + 标题动效 (借鉴第二网页) */
+    .breathWord {
+      display: inline-block;
+      animation: breath 3.6s ease-in-out infinite;
+    }
+    @keyframes breath {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(-3px); opacity: 0.85; }
+    }
+    .headlineWord {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    .headlineWord.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 手机端额外优化 */
+    @media (max-width: 640px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+      .contact-panel h2 {
+        font-size: 26px;
+      }
+      .teacher-spotlight {
+        flex-direction: column;
+        text-align: center;
+      }
+      /* 手机端左对齐保持一致性但内部文字依然左对齐，不强制居中 */
+      .teacher-info {
+        text-align: left;
+        width: 100%;
+      }
+    }
+
+    /* 返回上一页悬浮按钮 (从原物理页面保留但样式稍微紧凑) */
+    .back-prev-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 48px;
+      height: 48px;
+      background: #1e293b;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.9);
+      z-index: 99;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      background-color: rgba(30, 41, 59, 0.85);
+    }
+    .back-prev-btn.show {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+    .back-prev-btn:active {
+      transform: scale(0.96);
+    }
+    .back-prev-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: white;
+      stroke-width: 2.2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .back-prev-btn::after {
+      content: "返回上一页";
+      position: absolute;
+      right: 56px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+    }
+    .back-prev-btn:hover::after {
+      opacity: 1;
+    }
+    @media (max-width: 640px) {
+      .back-prev-btn::after {
+        font-size: 10px;
+        right: 52px;
+      }
+    }
+
+    /* ========= 返回主页面按钮样式 (与数学、化学页面保持一致) ========= */
+    .back-home-btn {
+      position: fixed;
+      bottom: 28px;
+      left: 18px;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      backdrop-filter: blur(12px);
+      border-radius: 44px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1002;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-weight: 500;
+      font-size: 14px;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+
+    .back-home-btn:active {
+      transform: scale(0.94);
+      background: #0f172a;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 480px) {
+      .back-home-btn {
+        bottom: 20px;
+        left: 12px;
+        padding: 8px 16px;
+        font-size: 13px;
+      }
+    }
+
+    .back-home-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+      stroke-width: 2.2;
+      fill: none;
+      transition: transform 0.2s ease;
+    }
+
+    .back-home-btn:active svg {
+      transform: translateX(-3px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 侧边栏抽屉 (与第二个网页完全一致) -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <div class="drawer" id="drawerMenu">
+    <div class="drawer-header">
+      <div class="drawer-close" id="drawerCloseBtn">✕</div>
+    </div>
+    <a href="#course">📚 课程体系</a>
+    <a href="#teacher">🔭 王牌师资</a>
+    <a href="#feature">⚡ 物理特色</a>
+    <a href="#contact">📞 预约诊断</a>
+  </div>
+
+  <!-- 导航栏 (采用第二个网页一模一样的风格) -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-scroll-progress" id="scrollProgress"></div>
+    <div class="wrap navin">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="图片/2.1.jpg" width="50" height="40" alt="" style="border-radius:10px; object-fit:cover;" />
+        <strong>领航物理</strong>
+      </div>
+      <button class="mobile-menu-btn" id="menuToggleBtn" aria-label="菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- 英雄区 (保留原物理内容，增加标题动效) -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">✦ 初高中物理高端定制辅导 ✦</div>
+      <h1>
+        <span class="headlineWord breathWord">物理提分</span><br>
+        <span class="headlineWord breathWord">从“听得懂”到“做得对”</span>
+      </h1>
+      <p>让抽象原理触手可及，让复杂大题迎刃而解</p>
+      <div class="btn-group">
+        <!-- 顶部预约诊断按钮：滚动到下方#contact区块 -->
+        <a class="btn primary" href="#contact" id="topDiagnosticLink">预约诊断</a>
+        <a class="btn secondary" href="#course">查看课程详情</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 课程体系 (物理原卡片) -->
+  <section class="section wrap reveal" id="course">
+    <h2 class="title">领航物理课程</h2>
+    <p class="sub">关于万物运行与底层逻辑的思考</p>
+    <div class="grid">
+      <div class="card">
+        <span class="physics-symbol">01</span>
+        <h3>领航小组课</h3>
+        <p>夯实基本模型，蓄力逻辑跨越</p>
+      </div>
+      <div class="card">
+        <span class="physics-symbol">02</span>
+        <h3>拓展小组课</h3>
+        <p>拆解力电模型，重构逻辑链路</p>
+      </div>
+      <div class="card">
+        <span class="physics-symbol">03</span>
+        <h3>考前冲刺小组课</h3>
+        <p>归纳压轴模型，重塑临考心态</p>
+      </div>
+      <div class="card">
+        <span class="physics-symbol">04</span>
+        <h3>一对一精准辅导</h3>
+        <p>突破、补弱，因材施教</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 物理王牌讲师 (内容左对齐) -->
+  <section class="section wrap reveal" id="teacher">
+    <h2 class="title">物理王牌讲师</h2>
+    <div class="teacher-spotlight">
+      <div class="teacher-avatar">🔭</div>
+      <div class="teacher-info">
+        <h3>吴老师 · 物理首席</h3>
+        <p class="role">11年物理教学经验 | 原重点高中物理竞赛教练</p>
+        <p class="desc">深谙初高中物理模型化解题思路，带领学生从本质理解力、电、光、热，擅长将复杂物理过程拆解为可复用模型。所带学员提分率高达92%，广州中考物理满分学员众多。</p>
+      </div>
+    </div>
+    <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+      <span style="background:#f1f5f9; padding:6px 18px; border-radius:40px; font-size:13px;">🏆 竞赛教练出身</span>
+      <span style="background:#f1f5f9; padding:6px 18px; border-radius:40px; font-size:13px;">📐 模型教学法奠基人</span>
+      <span style="background:#f1f5f9; padding:6px 18px; border-radius:40px; font-size:13px;">🎯 压轴题满分策略</span>
+    </div>
+  </section>
+
+  <!-- 物理独家优势 (原物理特色) -->
+  <section class="section wrap reveal" id="feature">
+    <h2 class="title">领航物理 · 独家优势</h2>
+    <p class="sub">不只是讲题，而是教学生如何分析物理过程</p>
+    <div class="feature-list">
+      <div class="feature-item">
+        <span class="feature-icon">🧲</span>
+        <span><strong>经典模型拆解：</strong> 将受力、运动、能量转化抽象为标准模型，让新题变旧题。</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">📊</span>
+        <span><strong>动态过程推演：</strong>深度剖析实验误差与原理细节，攻克广州卷实验设计难点。</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🔍</span>
+        <span><strong>逻辑死角扫描：</strong> 精准捕捉解题中的思维断层，从源头纠正“凭感觉”的习惯。</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">📈</span>
+        <span><strong>考法全能覆盖：</strong>紧扣广州命题规律，构建从基础夯实到压轴攻坚的完整链路。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 预约诊断区块 — 按钮改为真正的超链接跳转（示例跳转百度），不再弹窗 -->
+  <section class="section wrap reveal" id="contact">
+    <div class="contact-panel">
+      <h2>预约物理专属诊断</h2>
+      <p style="color:#64748b; font-size:16px; margin-bottom:24px;">获取专属物理水平诊断+提分路线规划</p>
+      <!-- 真正的超链接按钮：点击跳转外部链接（示例为百度），可替换为真实表单/客服链接 -->
+      <a class="btn primary" href="3.2.html" target="_blank" rel="noopener noreferrer" style="font-size:17px; padding:12px 28px;" id="realPhysicsDiagnosticBtn">咨询我们 →</a>
+      <p style="margin-top:24px; color:#94a3b8; font-size:13px;">或直接致电：1111-1111 (领航教育)</p>
+    </div>
+  </section>
+
+  <div class="wrap footer">
+    领航教育 © 2026 ｜ 初高中物理高端培优品牌 ｜ 用模型思维破解一切难题
+  </div>
+
+  <!-- 返回上一页悬浮按键 (物理页面原有功能保留) -->
+  <div class="back-prev-btn" id="backPrevPageBtn" role="button" aria-label="返回上一页">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <!-- ★ 返回主页面按钮 - 无预置链接，您自行修改 href 即可 ★ -->
+  <a href="2.html" id="backHomeButton" class="back-home-btn" title="返回主页面">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-8H9v8H4a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    <span>主页</span>
+  </a>
+
+  <script>
+    (function() {
+      // 汉堡菜单交互 (完全参照第二个网页)
+      const menuBtn = document.getElementById('menuToggleBtn');
+      const drawer = document.getElementById('drawerMenu');
+      const overlay = document.getElementById('drawerOverlay');
+      const closeBtn = document.getElementById('drawerCloseBtn');
+      const body = document.body;
+
+      function openDrawer() {
+        drawer.classList.add('open');
+        overlay.classList.add('show');
+        body.classList.add('drawer-open');
+      }
+      function closeDrawer() {
+        drawer.classList.remove('open');
+        overlay.classList.remove('show');
+        body.classList.remove('drawer-open');
+      }
+      if (menuBtn) menuBtn.addEventListener('click', openDrawer);
+      if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+      if (overlay) overlay.addEventListener('click', closeDrawer);
+      document.querySelectorAll('.drawer a').forEach(link => link.addEventListener('click', closeDrawer));
+
+      // 滚动进度条 + 导航滚动样式
+      const nav = document.getElementById('mainNav');
+      const progressBar = document.getElementById('scrollProgress');
+      function handleScroll() {
+        const y = window.scrollY;
+        if (nav) nav.classList.toggle('scrolled', y > 10);
+        if (progressBar) {
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = docHeight > 0 ? (y / docHeight) * 100 : 0;
+          progressBar.style.width = Math.min(progress, 100) + '%';
+        }
+        // 返回按钮显示逻辑：滚动大于120px时展示
+        const backBtn = document.getElementById('backPrevPageBtn');
+        if (backBtn) {
+          if (y > 120) backBtn.classList.add('show');
+          else backBtn.classList.remove('show');
+        }
+      }
+      window.addEventListener('scroll', handleScroll);
+      handleScroll();
+
+      // 标题逐字动画 (借鉴第二网页)
+      setTimeout(() => {
+        document.querySelectorAll('.headlineWord').forEach((w, i) => setTimeout(() => w.classList.add('show'), i * 180));
+      }, 100);
+
+      // 滚动显示动画 (reveal)
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('show');
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+      // 返回上一页功能
+      const backBtn = document.getElementById('backPrevPageBtn');
+      if (backBtn) {
+        backBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            alert('没有可返回的上一页记录，您可以继续浏览当前页面。');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        });
+      }
+
+      // 所有锚点平滑跳转（内部链接，不包括外部跳转按钮，并且排除返回主页按钮）
+      const allAnchors = document.querySelectorAll('a[href^="#"]');
+      allAnchors.forEach(link => {
+        // 排除返回主页按钮和底部的真实诊断按钮
+        if (link.id === 'backHomeButton') return;
+        if (link.id === 'realPhysicsDiagnosticBtn') return;
+        const targetId = link.getAttribute('href');
+        if (targetId === "#" || targetId === "") return;
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const navHeight = document.querySelector('.nav')?.offsetHeight || 60;
+            const offsetTop = targetElement.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            history.pushState(null, null, targetId);
+            if (drawer && drawer.classList.contains('open')) closeDrawer();
+          });
+        }
+      });
+      
+      // 页面加载时处理锚点偏移
+      if (window.location.hash && window.location.hash.length > 1) {
+        setTimeout(() => {
+          const target = document.querySelector(window.location.hash);
+          if (target) {
+            const navHeight = document.querySelector('.nav')?.offsetHeight || 60;
+            const offsetTop = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+          }
+        }, 200);
+      }
+    })();
+  </script>
+</body>
+</html>

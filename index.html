@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover, shrink-to-fit=no">
+  <title>领航数理化 · 科学教育</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      background: #f5f5f5;
+    }
+
+    body {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111;
+    }
+
+    .bg-glow {
+      position: absolute;
+      width: 900px;
+      height: 900px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+          rgba(120, 119, 255, 0.08),
+          rgba(255, 255, 255, 0));
+      filter: blur(80px);
+      animation: floatGlow 8s ease-in-out infinite;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes floatGlow {
+      0%, 100% {
+        transform: translate(-50%, -50%) translateY(0px) scale(1);
+      }
+      50% {
+        transform: translate(-50%, -50%) translateY(-20px) scale(1.04);
+      }
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1280px;
+      padding: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 140px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .left {
+      width: 480px;
+      animation: fadeUp 1s cubic-bezier(.22, 1, .36, 1);
+    }
+
+   
+    .logo {
+    font-size: 100px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -5px;
+    margin-bottom: 18px;
+    color: #5aa8ff;
+    text-shadow: 0 0 18px rgba(80, 140, 255, .25),
+        0 10px 30px rgba(80, 140, 255, .15);
+    position: relative;
+    word-break: break-word;
+    }
+
+    .title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 18px;
+      color: #1f1f1f;
+      word-break: break-word;
+    }
+
+    .desc {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #666;
+      margin-bottom: 36px;
+    }
+
+   
+    .btn {
+      width: max-content;
+      border-radius: 20px;
+      overflow: hidden;
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, .95),
+          rgba(210, 232, 255, .9));
+      border: 1px solid rgba(120, 180, 255, .35);
+      box-shadow: 0 10px 30px rgba(76, 91, 255, .15),
+        inset 0 1px 0 rgba(255, 255, 255, .8);
+      cursor: pointer;
+      transition: transform .45s cubic-bezier(.22, 1, .36, 1),
+        box-shadow .45s ease,
+        background .45s ease;
+      position: relative;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg,
+          transparent 30%,
+          rgba(255, 255, 255, .7),
+          transparent 70%);
+      transform: translateX(-120%);
+      transition: transform .8s ease;
+    }
+
+    .btn:hover::before {
+      transform: translateX(120%);
+    }
+
+    .btn:hover {
+      transform: translateY(-5px) scale(1.04);
+      box-shadow: 0 18px 40px rgba(76, 91, 255, .22),
+        0 0 20px rgba(110, 170, 255, .2);
+    }
+
+    .btn a {
+      display: block;
+      padding: 18px 42px;
+      text-decoration: none;
+    }
+
+    .btn span {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #4a96ff;
+    }
+
+    
+    .right {
+      perspective: 1400px;
+    }
+
+    .card {
+      width: 390px;
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      background: rgba(255, 255, 255, .55);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, .65);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .10),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
+      transform-style: preserve-3d;
+      transition: transform .25s ease, box-shadow .35s ease;
+      animation: cardFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes cardFloat {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    .card:hover {
+      box-shadow: 0 40px 100px rgba(70, 80, 255, .16),
+        inset 0 1px 0 rgba(255, 255, 255, .95);
+    }
+
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.06);
+      transition: opacity 1.2s ease, transform 6s ease;
+    }
+
+    .hero-img.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .image-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #666;
+      background: linear-gradient(135deg, #f8fafc, #eef2ff);
+      z-index: -1;
+    }
+
+    .card-content {
+      padding: 24px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: #fff;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7b61ff, #4f8cff);
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avatar::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .text {
+      flex: 1;
+    }
+
+    .text p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #2d2d2d;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg,
+          transparent 30%,
+          rgba(255, 255, 255, .55),
+          transparent 70%);
+      transform: translateX(-120%);
+      animation: shine 5s infinite;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    @keyframes shine {
+      0% {
+        transform: translateX(-120%);
+      }
+      30% {
+        transform: translateX(120%);
+      }
+      100% {
+        transform: translateX(120%);
+      }
+    }
+
+    .footer {
+      position: absolute;
+      left: 40px;
+      bottom: 24px;
+      font-size: 14px;
+      color: #888;
+      z-index: 5;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }
+
+   
+    @media (max-width: 980px) {
+      body {
+        overflow: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        height: auto;
+      }
+
+      .bg-glow {
+        width: 500px;
+        height: 500px;
+        filter: blur(60px);
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .page {
+        flex-direction: column;
+        gap: 50px;
+        padding: 70px 24px 60px;
+        max-width: 100%;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+      }
+
+      .left {
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo {
+        font-size: 68px;
+        letter-spacing: -3px;
+        margin-bottom: 16px;
+      }
+
+      .title {
+        font-size: 34px;
+        text-align: center !important;
+      }
+
+      
+      .title[style*="text-align: left"] {
+        text-align: center !important; 
+      }
+
+      .desc {
+        font-size: 17px;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .btn {
+        margin: 0 auto;
+      }
+
+      .btn a {
+        padding: 16px 38px;
+      }
+
+      .btn span {
+        font-size: 22px;
+      }
+
+      .right {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        perspective: 1000px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto;
+        animation: cardFloatMobile 6s ease-in-out infinite;
+      }
+
+      @keyframes cardFloatMobile {
+        0%, 100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+
+      .slider {
+        height: 260px;
+      }
+
+      .card-content {
+        padding: 20px;
+        gap: 12px;
+      }
+
+      .text p {
+        font-size: 14px;
+      }
+
+      /* 移动端底部文字保持左下角，不居中 */
+      .footer {
+        position: fixed;
+        left: 20px;
+        bottom: 16px;
+        right: auto;
+        top: auto;
+        margin: 0;
+        text-align: left;
+        font-size: 12px;
+        padding: 0;
+        width: auto;
+        background: transparent;
+      }
+      
+      .card {
+        transform-style: flat;
+      }
+    }
+
+    
+    @media (max-width: 480px) {
+      .logo {
+    font-size: 60px;
+    letter-spacing: -2px;
+      }
+
+      .title {
+        font-size: 28px;
+      }
+
+      .desc {
+        font-size: 16px;
+      }
+
+      .btn a {
+        padding: 14px 32px;
+      }
+
+      .btn span {
+        font-size: 20px;
+      }
+
+      .slider {
+        height: 220px;
+      }
+
+      .card {
+        max-width: 320px;
+      }
+      
+      .footer {
+        left: 16px;
+        bottom: 12px;
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <div class="page">
+    <div class="left">
+      <div class="logo">领航数理化</div>
+      <div class="title" style="text-align: left; font-size: 35px;">
+        专注中学数理化教学
+      </div>
+      <div class="desc">
+        重塑逻辑，让理科学习更简单
+      </div>
+      <div class="btn">
+        <a href="2.html">
+          <span>了解我们</span>
+        </a>
+      </div>
+    </div>
+
+    
+
+     
+          <p>&nbsp;
+           </p>
+          </div>
+     
+
+  <div class="footer">
+    LEADING THE WAY IN SCIENCE EDUCATION
+  </div>
+
+  <script>
+    (function() {
+      const card = document.getElementById('card');
+      if (!card) return;
+
+     
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+
+      if (!isTouchDevice) {
+       
+        window.addEventListener('mousemove', function(e) {
+          if (window.innerWidth <= 980) return; 
+          const x = (window.innerWidth / 2 - e.clientX) / 40;
+          const y = (window.innerHeight / 2 - e.clientY) / 40;
+          card.style.transform = `
+            rotateY(${-x}deg)
+            rotateX(${y}deg)
+            translateY(-8px)
+          `;
+        });
+
+        window.addEventListener('mouseleave', function() {
+          card.style.transform = '';
+        });
+      } else {
+        
+        card.style.transform = '';
+       
+        card.addEventListener('touchstart', function() {
+          card.style.transition = 'transform 0.2s ease';
+          card.style.transform = 'scale(0.98)';
+        }, {passive: true});
+        card.addEventListener('touchend', function() {
+          card.style.transform = '';
+        });
+        card.addEventListener('touchcancel', function() {
+          card.style.transform = '';
+        });
+      }
+
+     
+      const slides = document.querySelectorAll('.hero-img');
+      if (slides.length === 0) return;
+      let current = 0;
+
+      setInterval(function() {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }, 3500);
+
+     
+      window.addEventListener('resize', function() {
+        if (window.innerWidth <= 980 || isTouchDevice) {
+          card.style.transform = '';
+        }
+      });
+
+      
+      if (window.innerWidth <= 980 || isTouchDevice) {
+        card.style.transform = '';
+      }
+    })();
+  </script>
+</body>
+</html>

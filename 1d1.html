@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>领航教育｜一对一高端辅导·私人定制提分</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(135deg, #eaf4ff 0%, #ffffff 38%, #dbeafe 72%, #ffffff 100%);
+      background-attachment: fixed;
+      color: #111827;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* 导航栏 —— 保持原有蓝色调与毛玻璃效果 */
+    .nav {
+      position: sticky;
+      top: 12px;
+      margin: 0 auto;
+      width: calc(100% - 28px);
+      max-width: 1240px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.42));
+      backdrop-filter: saturate(200%) blur(24px);
+      -webkit-backdrop-filter: saturate(200%) blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      overflow: hidden;
+      transition: all 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+      z-index: 10;
+    }
+    .nav.scrolled {
+      top: 8px;
+      transform: scale(0.985);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.52));
+      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+    .navin {
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav strong {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .menu {
+      display: flex;
+      gap: 28px;
+      font-size: 12px;
+      color: #424245;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+    .menu a {
+      position: relative;
+      padding: 10px 16px;
+      border-radius: 999px;
+      transition: all 0.3s ease;
+    }
+    .menu a:hover {
+      background: rgba(37, 99, 235, 0.08);
+      color: #2563eb;
+      transform: translateY(-1px);
+    }
+    .nav-scroll-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #2563eb, #60a5fa);
+      width: 0%;
+      transition: width 0.1s linear;
+      z-index: 11;
+      border-radius: 0 0 22px 22px;
+    }
+
+    /* 英雄区 */
+    .hero {
+      padding: 100px 0 80px;
+      text-align: center;
+      position: relative;
+    }
+    .eyebrow {
+      color: #2563eb;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: clamp(42px, 7vw, 80px);
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .hero p {
+      max-width: 680px;
+      margin: 0 auto 38px;
+      color: #6e6e73;
+      font-size: 22px;
+      line-height: 1.4;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 26px;
+      border-radius: 999px;
+      font-weight: 500;
+      font-size: 17px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: inline-block;
+    }
+    .primary {
+      background: #0071e3;
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(0, 113, 227, 0.22);
+    }
+    .primary:hover {
+      background: #0077ed;
+      transform: scale(1.02);
+    }
+    .secondary {
+      background: #fff;
+      border: 1px solid #d2d2d7;
+    }
+    .secondary:hover {
+      background: #f5f5f7;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+    .title {
+      font-size: clamp(36px, 5vw, 60px);
+      letter-spacing: -0.04em;
+      text-align: center;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .sub {
+      max-width: 700px;
+      margin: 0 auto 46px;
+      text-align: center;
+      color: #6e6e73;
+      font-size: 20px;
+      line-height: 1.4;
+    }
+
+    /* 流程步骤 */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .step-card {
+      background: #ffffff;
+      border: 1px solid #eef0f3;
+      border-radius: 28px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.04);
+      transition: transform 0.35s ease;
+    }
+    .step-card:hover {
+      transform: translateY(-6px);
+    }
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: #2563eb;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 auto 16px;
+    }
+    .step-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .step-card p {
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* 对比卡片 */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .compare-card {
+      background: #ffffff;
+      border: 1px solid #eef0f3;
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.04);
+    }
+    .compare-card.negative {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+    .compare-card.positive {
+      background: #f0f9ff;
+      border-color: #bae6fd;
+    }
+    .compare-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .compare-card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .compare-card li {
+      padding: 8px 0;
+      font-size: 15px;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 教师卡片 */
+    .teacher-spotlight {
+      background: #ffffff;
+      border: 1px solid #eef0f3;
+      border-radius: 36px;
+      padding: 40px;
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.05);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      align-items: center;
+    }
+    .teacher-avatar {
+      width: 140px;
+      height: 140px;
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: #2563eb;
+      box-shadow: 0 15px 30px rgba(37, 99, 235, 0.1);
+    }
+    .teacher-info h3 {
+      font-size: 26px;
+      font-weight: 700;
+    }
+    .teacher-info .role {
+      color: #2563eb;
+      font-weight: 600;
+      margin: 6px 0 10px;
+    }
+    .teacher-info .desc {
+      color: #475569;
+      max-width: 500px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* 保障列表 */
+    .guarantee-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .guarantee-item {
+      background: #ffffff;
+      border: 1px solid #eef0f3;
+      border-radius: 24px;
+      padding: 28px 24px;
+      min-width: 200px;
+      flex: 1;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.03);
+    }
+    .guarantee-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+    .guarantee-item h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .guarantee-item p {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .footer {
+      padding: 32px 0;
+      color: #64748b;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    /* ========= 返回上一页悬浮按钮 (专用于返回上一个历史记录) ========= */
+    .back-prev-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 54px;
+      height: 54px;
+      background: #1e293b;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.9);
+      z-index: 99;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      background-color: rgba(30, 41, 59, 0.85);
+    }
+    .back-prev-btn.show {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+    .back-prev-btn:hover {
+      background: #0f172a;
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+      background-color: #1e293b;
+    }
+    .back-prev-btn:active {
+      transform: scale(0.96);
+    }
+    /* 返回上一页的箭头图标 (左箭头示意返回) */
+    .back-prev-btn svg {
+      width: 24px;
+      height: 24px;
+      stroke: white;
+      stroke-width: 2.2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    /* 为了区分配置，增加一个小的工具提示 (可选悬停显示) */
+    .back-prev-btn::after {
+      content: "返回上一页";
+      position: absolute;
+      right: 62px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+    }
+    .back-prev-btn:hover::after {
+      opacity: 1;
+    }
+
+    /* 新增加第二按钮：但为了避免冲突只用一个返回上一页键，原有的返回顶部分离可选——但为了满足“返回上一页”核心要求，保留右下角独立按钮。 
+       同时用户可能也需要回到顶部，但需求是“返回上一个页面的按键”，所以完全按照需求做：点击后网页后退一页。 
+       并且为了更好的体验，如果无法后退（无历史记录）就给出轻提示或重定向到首页？优雅做法: 判断是否有历史栈 */
+    
+    @media (max-width: 640px) {
+      .wrap { padding: 0 16px; }
+      .menu { display: none; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .teacher-spotlight { flex-direction: column; text-align: center; }
+      .hero h1 { font-size: 36px; }
+      .guarantee-item { min-width: 140px; }
+      .back-prev-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 48px;
+        height: 48px;
+      }
+      .back-prev-btn svg {
+        width: 22px;
+        height: 22px;
+      }
+      .back-prev-btn::after {
+        font-size: 10px;
+        right: 54px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="mainNav">
+    <div class="nav-scroll-progress" id="scrollProgress"></div>
+    <div class="wrap navin">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="图片/2.1.jpg"
+			 alt="" width="75" height="50"/> <strong>领航一对一</strong>
+      </div>
+      <div class="menu">
+        <a href="#process">辅导流程</a>
+        <a href="#compare">为何选择</a>
+        <a href="#teacher">师资匹配</a>
+        <a href="#contact">立即预约</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">✦ 初高中数理化一对一高端辅导 ✦</div>
+      <h1>真正的一对一<br>是为每个孩子定制一条路</h1>
+      <p>11111111</p>
+      <div class="btn-group">
+        <a class="btn primary" href="#contact">预约&nbsp;</a>
+        <a class="btn secondary" href="#process">了解辅导流程</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="process">
+    <h2 class="title">一对一辅导 · 四步提分法</h2>
+    <p class="sub">1</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>🧪 全面诊断</h3>
+        <p>1111</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>📋 定制方案</h3>
+        <p>1111</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>🎓 一对一授课</h3>
+        <p>11111。</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h3>📈 跟踪反馈</h3>
+        <p>11111</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="compare">
+    <h2 class="title">一对一 vs 传统班课</h2>
+    <p class="sub">为什么更多家庭选择一对一精准提分？</p>
+    <div class="compare-grid">
+      <div class="compare-card negative">
+        <h3>❌ 传统大班课</h3>
+        <ul>
+          <li>📌 1111</li>
+          <li>📌 1111</li>
+          <li>📌 1111</li>
+          <li>📌 1111</li>
+        </ul>
+      </div>
+      <div class="compare-card positive">
+        <h3>✅ 领航一对一</h3>
+        <ul>
+          <li>🎯 1111</li>
+          <li>🎯 111</li>
+          <li>🎯 11</li>
+          <li>🎯 1111</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="teacher">
+    <h2 class="title">严选一对一教师</h2>
+    <p class="sub">11111111</p>
+    <div class="teacher-spotlight">
+      <div class="teacher-avatar">👨‍🏫</div>
+      <div class="teacher-info">
+        <h3>多学科星级教师团队</h3>
+        <p class="role">数学 · 物理 · 化学 | 平均教龄10年+</p>
+        <p class="desc">11111</p>
+      </div>
+    </div>
+    <div style="margin-top:24px; display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
+      <span style="background:#f1f5f9; padding:8px 20px; border-radius:40px;">🏅 985/211毕业背景</span>
+      <span style="background:#f1f5f9; padding:8px 20px; border-radius:40px;">📋 定期教学考核</span>
+      <span style="background:#f1f5f9; padding:8px 20px; border-radius:40px;">❤️ 擅长学生沟通</span>
+    </div>
+  </section>
+
+  <section class="section wrap" id="guarantee">
+    <h2 class="title">服务保障</h2>
+    <p class="sub">111111</p>
+    <div class="guarantee-list">
+      <div class="guarantee-item">
+        <div class="guarantee-icon">🔄</div>
+        <h4>不满意随时调整</h4>
+        <p>111111</p>
+      </div>
+      <div class="guarantee-item">
+        <div class="guarantee-icon">📊</div>
+        <h4>月度学习报告</h4>
+        <p>1111</p>
+      </div>
+      <div class="guarantee-item">
+        <div class="guarantee-icon">💬</div>
+        <h4>专属学习群</h4>
+        <p>11111</p>
+      </div>
+      <div class="guarantee-item">
+        <div class="guarantee-icon">🎯</div>
+        <h4>目标达成保障</h4>
+        <p>11111111111</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" style="text-align:center;" id="contact">
+    <div style="background:#ffffff; border-radius:38px; padding:50px 30px; box-shadow:0 25px 60px rgba(0,0,0,0.04);">
+      <h2 style="font-size:38px; margin-bottom:16px;">立即预约一对一诊断</h2>
+      <p style="color:#64748b; font-size:18px; margin-bottom:30px;">1111111111</p>
+      <a class="btn primary" href="3.html" id="diagnosticBookingBtn" style="font-size:18px; padding:14px 32px;">预约&nbsp;</a>
+      <p style="margin-top:24px; color:#94a3b8; font-size:14px;">或直接致电：1111-1111 (领航教育)</p>
+    </div>
+  </section>
+
+  <div class="wrap footer">
+    领航教育 © 2026 ｜ 初高中数理化一对一高端辅导 ｜ 私人定制，精准提分
+  </div>
+
+  <!-- 返回上一个页面的按键 (完全符合需求) -->
+  <div class="back-prev-btn" id="backPrevPageBtn" role="button" aria-label="返回上一个页面">
+    <a href="2.html">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    </a>    <span style="display: none;">返回上一页</span>
+  </div>
+
+  <script>
+    (function() {
+      // 获取元素
+      const nav = document.getElementById('mainNav');
+      const progressBar = document.getElementById('scrollProgress');
+      const backPrevBtn = document.getElementById('backPrevPageBtn');
+      
+      // 滚动效果: 控制导航样式及返回按钮的可见性（为了不干扰内容，返回按钮在滚动超过100px再显示更友好？不过为了始终可用，设置只要滚动就show可？经典方案滚动超过200px显示，但不影响点击区域，为了一致: 当滚动超过150px显示，否则半透明且不干扰视线。但为了用户快速找到返回键，更倾向于只要页面有过滚动/早期显示。不过更优雅: 刚进页面时隐藏，滚动后显示，提升空间感）
+      function handleScroll() {
+        const scrollY = window.scrollY;
+        if (nav) {
+          nav.classList.toggle('scrolled', scrollY > 20);
+        }
+        if (progressBar) {
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+          progressBar.style.width = Math.min(progress, 100) + '%';
+        }
+        // 返回上一页按钮的显隐: 滚动超过120px展示，更加符合直觉，但其实也可以常驻，但根据UI习惯悬浮按钮避免过于突兀，当滚动时出现并提供返回便利。
+        if (backPrevBtn) {
+          if (scrollY > 120) {
+            backPrevBtn.classList.add('show');
+          } else {
+            backPrevBtn.classList.remove('show');
+          }
+        }
+      }
+      
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll(); // 初始化位置
+      
+      // ========== 核心功能: 返回上一个页面（历史后退） ==========
+      if (backPrevBtn) {
+        backPrevBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          // 使用浏览器历史记录返回上一页功能
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            // 如果没有历史记录（比如直接打开当前页面或者新标签打开, 没有上一页），优雅降级: 提示用户无上一页并提供备用方案，也可以优雅跳转至首页或教育首页，但为了不违反预期，提供轻提示
+            // 创造一条友好的反馈：可返回至领航教育首页（该页面自身），但更好的做法是给一个小小的提示，至少不会无响应。
+            alert('没有可返回的上一页记录，您可以直接点击导航栏浏览其他内容。');
+            // 可选: 也可以滚动回页面顶部，提升体验（不强求）
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        });
+      }
+      
+      // 原有平滑锚点跳转（增强所有内部锚点链接的偏移效果，保证导航栏不会遮挡内容）
+      const allInternalLinks = document.querySelectorAll('a[href^="#"]');
+      allInternalLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === "#" || targetId === "") return;
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            const navHeight = document.querySelector('.nav')?.offsetHeight || 70;
+            const offsetTop = targetElement.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+            history.pushState(null, null, targetId);
+          }
+        });
+      });
+      
+      // 针对URL初始锚点的处理
+      if (window.location.hash && window.location.hash.length > 1) {
+        setTimeout(() => {
+          const targetElem = document.querySelector(window.location.hash);
+          if (targetElem) {
+            const navHeight = document.querySelector('.nav')?.offsetHeight || 70;
+            const offsetTop = targetElem.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+          }
+        }, 100);
+      }
+      
+      // 预约按钮提示（保留原有设计微交互）
+      const diagBtn = document.getElementById('diagnosticBookingBtn');
+      if (diagBtn) {
+        diagBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert('🎓 感谢您的预约！我们的课程顾问会尽快联系您，安排专属一对一诊断。');
+        });
+      }
+
+      // 卡片交错入场动画 (原有效果)
+      const animatedElements = document.querySelectorAll('.step-card, .compare-card, .teacher-spotlight, .guarantee-item');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = 1;
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.2 });
+      
+      animatedElements.forEach((el, i) => {
+        el.style.opacity = 0;
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = `all 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${i * 0.07}s`;
+        observer.observe(el);
+      });
+      
+      // 附加: 因为返回上一页按钮可能触发在无历史场景，完善一点避免移动端误触
+      // 鼠标悬浮时提供文字提示（已经用伪元素做了）
+    })();
+  </script>
+</body>
+</html>

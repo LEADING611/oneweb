@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+  <title>领航数学｜初高中数学培优·高端定制</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(135deg, #eaf4ff 0%, #ffffff 38%, #dbeafe 72%, #ffffff 100%);
+      background-attachment: fixed;
+      color: #111827;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    
+    .nav {
+      position: sticky;
+      top: 8px;
+      margin: 0 auto;
+      width: calc(100% - 16px);
+      max-width: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65)) !important;
+      backdrop-filter: saturate(200%) blur(24px) !important;
+      -webkit-backdrop-filter: saturate(200%) blur(24px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.6) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      z-index: 100;
+      overflow: visible;
+      transition: all 0.3s ease;
+    }
+
+    .nav.scrolled {
+      top: 4px;
+      transform: scale(0.98);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.75)) !important;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+    }
+
+    .navin {
+      height: 52px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav strong {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    /* 桌面菜单隐藏，手机汉堡按钮 */
+    .menu {
+      display: none;
+    }
+
+    /* 汉堡按钮 */
+    .mobile-menu-btn {
+      display: flex;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 40px;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s ease;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .mobile-menu-btn:active {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(0.96);
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 20px;
+      height: 2.5px;
+      background-color: #1e293b;
+      transition: all 0.25s ease;
+      border-radius: 4px;
+    }
+
+    /* 侧边栏抽屉 */
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 260px;
+      max-width: 75vw;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      box-shadow: -4px 0 32px rgba(0, 0, 0, 0.15);
+      z-index: 1001;
+      transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .drawer-close {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #334155;
+    }
+
+    .drawer-close:active {
+      background: rgba(0, 0, 0, 0.12);
+      transform: scale(0.95);
+    }
+
+    .drawer a {
+      font-size: 20px;
+      font-weight: 500;
+      color: #1e293b;
+      padding: 14px 16px;
+      border-radius: 14px;
+      transition: all 0.2s;
+      margin: 2px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drawer a:active {
+      background: rgba(37, 99, 235, 0.12);
+      color: #2563eb;
+      transform: translateX(4px);
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .drawer-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    body.drawer-open {
+      overflow: hidden;
+    }
+
+    .nav-scroll-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #2563eb, #60a5fa);
+      width: 0%;
+      transition: width 0.05s linear;
+      z-index: 101;
+      border-radius: 0 0 16px 16px;
+    }
+
+    /* 英雄区优化 */
+    .hero {
+      padding: 60px 0 70px;
+      text-align: center;
+      position: relative;
+    }
+    .eyebrow {
+      color: #2563eb;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: 38px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .hero p {
+      max-width: 100%;
+      margin: 0 auto 28px;
+      color: #6e6e73;
+      font-size: 17px;
+      line-height: 1.4;
+      padding: 0 8px;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 22px;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 16px;
+      display: inline-block;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+    .primary {
+      background: #0071e3;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25);
+    }
+    .primary:active {
+      transform: scale(0.96);
+    }
+    .secondary {
+      background: #fff;
+      border: 1px solid #d2d2d7;
+    }
+    .secondary:active {
+      background: #f5f5f7;
+      transform: scale(0.96);
+    }
+
+    /* 通用区块 */
+    .section {
+      padding: 60px 0;
+    }
+    .title {
+      font-size: 32px;
+      letter-spacing: -0.03em;
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .sub {
+      max-width: 100%;
+      margin: 0 auto 32px;
+      text-align: center;
+      color: #6e6e73;
+      font-size: 16px;
+      line-height: 1.4;
+      padding: 0 12px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .card {
+      background: linear-gradient(180deg, #ffffff, #fbfbfd);
+      border: 1px solid #eef0f3;
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:active {
+      transform: scale(0.98);
+    }
+    .highlight-num {
+      font-size: 34px;
+      font-weight: 800;
+      color: #2563eb;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .card p {
+      color: #4b5563;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* 师资卡片 — 采用化学网页静态风格 */
+    .teacher-spotlight {
+      background: linear-gradient(180deg, #ffffff, #fbfbfd);
+      border: 1px solid #eef0f3;
+      border-radius: 28px;
+      padding: 32px 24px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .teacher-avatar {
+      width: 110px;
+      height: 110px;
+      background: linear-gradient(145deg, #d9e9ff, #eef4ff);
+      border-radius: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      color: #2563eb;
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.12);
+      margin: 0 auto;
+    }
+
+    .teacher-info {
+      flex: 1;
+      text-align: left;
+    }
+
+    .teacher-info h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .teacher-info .role {
+      color: #2563eb;
+      font-weight: 600;
+      margin: 8px 0 12px;
+      font-size: 0.9rem;
+    }
+
+    .teacher-info .desc {
+      color: #475569;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.6;
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 24px;
+    }
+
+    .badge-wrap {
+      margin-top: 28px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge-wrap span {
+      background: #f0f4fe;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* 对比模块 */
+    .compare-box {
+      background: #f9fafc;
+      border-radius: 28px;
+      padding: 24px 20px;
+      border: 1px solid #e9ebf0;
+    }
+    .compare-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid #eef2f6;
+      font-size: 14px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .compare-item:last-child {
+      border-bottom: none;
+    }
+    .badge {
+    background: #2563eb10;
+    color: #2563eb;
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-align: center;
+    }
+
+    /* 联系区块 */
+    .contact-panel {
+      background: linear-gradient(180deg, #ffffff, #fbfbfd);
+      border-radius: 32px;
+      padding: 40px 24px;
+      text-align: center;
+      border: 1px solid #eef0f3;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+    }
+    .contact-panel h2 {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+    .footer {
+      padding: 28px 16px;
+      color: #64748b;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 20px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* 入场动画 */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 辅助微交互 */
+    .breathWord {
+      display: inline-block;
+      animation: breath 3.6s ease-in-out infinite;
+    }
+    @keyframes breath {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(-3px); opacity: 0.85; }
+    }
+    .headlineWord {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    .headlineWord.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 手机端额外优化 */
+    @media (max-width: 640px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+      .contact-panel h2 {
+        font-size: 26px;
+      }
+      .teacher-info {
+        text-align: center;
+      }
+      .teacher-spotlight {
+        flex-direction: column;
+        text-align: center;
+        padding: 28px 20px;
+      }
+    }
+
+    /* ========= 返回主页面按钮样式 (与化学页面保持一致) ========= */
+    .back-home-btn {
+      position: fixed;
+      bottom: 28px;
+      left: 18px;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      backdrop-filter: blur(12px);
+      border-radius: 44px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1002;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-weight: 500;
+      font-size: 14px;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+
+    .back-home-btn:active {
+      transform: scale(0.94);
+      background: #0f172a;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 480px) {
+      .back-home-btn {
+        bottom: 20px;
+        left: 12px;
+        padding: 8px 16px;
+        font-size: 13px;
+      }
+    }
+
+    .back-home-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+      stroke-width: 2.2;
+      fill: none;
+      transition: transform 0.2s ease;
+    }
+
+    .back-home-btn:active svg {
+      transform: translateX(-3px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 侧边栏抽屉 -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <div class="drawer" id="drawerMenu">
+    <div class="drawer-header">
+      <div class="drawer-close" id="drawerCloseBtn">✕</div>
+    </div>
+    <a href="#course">📐 课程体系</a>
+    <a href="#teacher">👨‍🏫 王牌师资</a>
+    <a href="#method">⚡ 提分方法</a>
+    <a href="#contact">📞 预约诊断</a>
+  </div>
+
+  <!-- 导航栏 -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-scroll-progress" id="scrollProgress"></div>
+    <div class="wrap navin">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="图片/2.1.jpg" width="50" height="40" alt="" style="border-radius:10px; object-fit:cover;" />
+        <strong>领航数学</strong>
+      </div>
+      <button class="mobile-menu-btn" id="menuToggleBtn" aria-label="菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero 英雄区 -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">✦ 初高中数学高端定制辅导 ✦</div>
+      <h1>
+        <span class="headlineWord breathWord">数学提分</span><br>
+        <span class="headlineWord breathWord">从“听懂”到“考高分”</span>
+      </h1>
+      <p>带孩子跨越“一看就懂，一做就错”的鸿沟</p>
+      <div class="btn-group">
+        <!-- 顶部预约诊断按钮：跳转到下方#contact区块（平滑滚动） -->
+        <a class="btn primary" href="#contact" id="topDiagnosticLink">预约诊断</a>
+        <a class="btn secondary" href="#course">查看课程详情</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 课程体系 -->
+  <section class="section wrap reveal" id="course">
+    <h2 class="title">领航数学课程</h2>
+    <p class="sub">严谨逻辑 · 抽象思维 · 阶梯式突破</p>
+    <div class="grid">
+      <div class="card">
+        <span class="highlight-num">01</span>
+        <h3>领航小组课</h3>
+        <p>告别低效勤奋，让基础题变送分题，构建完整知识框架。</p>
+      </div>
+      <div class="card">
+        <span class="highlight-num">02</span>
+        <h3>拓展小组课</h3>
+        <p>训练逻辑思维，冲击数学高分，攻克压轴题型。</p>
+      </div>
+      <div class="card">
+        <span class="highlight-num">03</span>
+        <h3>考前冲刺小组课</h3>
+        <p>梳理核心考点，高效抢分策略，冲刺考试高分。</p>
+      </div>
+      <div class="card">
+        <span class="highlight-num">04</span>
+        <h3>一对一精准辅导</h3>
+        <p>突破瓶颈、查漏补缺，因材施教专属规划。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 师资团队 — 静态卡片风格 -->
+  <section class="section wrap reveal" id="teacher">
+    <h2 class="title">数学王牌讲师团</h2>
+    <p class="sub">平均教龄10年+，深谙初高中命题规律</p>
+    <div class="teacher-spotlight">
+      <div class="teacher-avatar">📐</div>
+      <div class="teacher-info">
+        <h3>郭老师 · 数学首席</h3>
+        <p class="role">12年教学经验 | 原重点中学数学教研组长</p>
+        <p class="desc">擅长基础薄弱逆袭、压轴题突破与学习习惯建立。独创“函数图谱+几何母题”体系，累计辅导学生提分率达91%，帮助大量中考生、高考生突破瓶颈，冲刺高分层次。</p>
+      </div>
+    </div>
+    <div class="badge-wrap">
+      <span>🏆 数学竞赛金牌教练</span>
+      <span>📈 平均提分28+</span>
+      <span>🎯 市级骨干教师</span>
+      <span>🧩 模型教学领航者</span>
+    </div>
+  </section>
+
+  <!-- 提分方法对比 -->
+  <section class="section wrap reveal" id="method">
+    <h2 class="title">为什么选择领航数学？</h2>
+    <p class="sub">告别无效内卷，用科学方法精准提分</p>
+    <div class="compare-box">
+      <div class="compare-item"><span><span class="badge">&nbsp;✅<span style="font-size: 16px">传统模式&nbsp;</span>          <span class="badge">&nbsp;✅<span style="font-size: 16px">选择我们</span></span></div>
+      <div class="compare-item"><span>❌大班授课，无法兼顾个体差异</span><span>✅ 模型教学，掌握解题底层逻辑</span></div>
+      <div class="compare-item"><span>❌只讲知识，不讲考场应试技巧</span><span>✅ 精准诊断，定制专属进阶路径</span></div>
+      <div class="compare-item"><span>❌听课都懂，一到考试就丢分</span><span>✅ 闭环反馈，确保从“听懂”到“会做”</span></div>
+      <div class="compare-item"><span>❌进度统一，薄弱点长期被忽视</span><span>✅ 动态调整，定点击破思维断层</span></div>
+    </div>
+  </section>
+
+  <!-- 预约诊断区块 — 这是真正的诊断区，按钮为超链接跳转（示例百度，可替换为实际联系/表单链接） -->
+  <section class="section wrap reveal" id="contact">
+    <div class="contact-panel">
+      <h2>预约数学专属诊断</h2>
+      <p style="color:#64748b; font-size:16px; margin-bottom:24px;">获取成绩分析 · 薄弱点定位 · 提分路线图</p>
+      <!-- 真正的超链接按钮，点击后跳转外部链接（示例为百度，可替换为真实表单/客服链接） -->
+      <a class="btn primary" href="3.1.html" target="_blank" rel="noopener noreferrer" style="font-size:17px; padding:12px 28px;" id="realDiagnosticBtn">咨询我们 →</a>
+      <p style="margin-top:24px; color:#94a3b8; font-size:13px;">或直接致电：1111-1111 (领航教育)</p>
+    </div>
+  </section>
+
+  <div class="wrap footer">
+    领航数学 © 2026 ｜ 初高中数学高端培优品牌 ｜ 专注成绩可视化提升
+  </div>
+
+  <!-- ★ 返回主页面按钮 - 无预置链接，您自行修改 href 即可 ★ -->
+  <a href="2.html" id="backHomeButton" class="back-home-btn" title="返回主页面">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-8H9v8H4a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    <span>主页</span>
+  </a>
+
+  <script>
+    (function() {
+      // 汉堡菜单交互
+      const menuBtn = document.getElementById('menuToggleBtn');
+      const drawer = document.getElementById('drawerMenu');
+      const overlay = document.getElementById('drawerOverlay');
+      const closeBtn = document.getElementById('drawerCloseBtn');
+      const body = document.body;
+
+      function openDrawer() {
+        drawer.classList.add('open');
+        overlay.classList.add('show');
+        body.classList.add('drawer-open');
+      }
+      function closeDrawer() {
+        drawer.classList.remove('open');
+        overlay.classList.remove('show');
+        body.classList.remove('drawer-open');
+      }
+      if (menuBtn) menuBtn.addEventListener('click', openDrawer);
+      if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+      if (overlay) overlay.addEventListener('click', closeDrawer);
+      document.querySelectorAll('.drawer a').forEach(link => link.addEventListener('click', closeDrawer));
+
+      // 滚动进度条 + 导航滚动样式
+      const nav = document.getElementById('mainNav');
+      const progressBar = document.getElementById('scrollProgress');
+      function handleScroll() {
+        const y = window.scrollY;
+        if (nav) nav.classList.toggle('scrolled', y > 10);
+        if (progressBar) {
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = docHeight > 0 ? (y / docHeight) * 100 : 0;
+          progressBar.style.width = Math.min(progress, 100) + '%';
+        }
+      }
+      window.addEventListener('scroll', handleScroll);
+      handleScroll();
+
+      // 标题逐字动画
+      setTimeout(() => {
+        document.querySelectorAll('.headlineWord').forEach((w, i) => setTimeout(() => w.classList.add('show'), i * 180));
+      }, 100);
+
+      // 滚动显示动画 (reveal)
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('show');
+        });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+      // 所有锚点平滑跳转（内部链接）- 排除返回主页按钮
+      const allAnchors = document.querySelectorAll('a[href^="#"]');
+      allAnchors.forEach(link => {
+        // 排除返回主页按钮，让它可以正常跳转外部链接
+        if (link.id === 'backHomeButton') return;
+        if (link.getAttribute('href') === '#') return;
+        const targetId = link.getAttribute('href');
+        if (targetId === "#") return;
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          link.addEventListener('click', function(e) {
+            // 如果点击的是顶部那个特殊诊断按钮（跳转到#contact），我们允许平滑滚动并关闭抽屉
+            e.preventDefault();
+            const navHeight = document.querySelector('.nav')?.offsetHeight || 60;
+            const offsetTop = targetElement.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            history.pushState(null, null, targetId);
+            if (drawer.classList.contains('open')) closeDrawer();
+          });
+        }
+      });
+
+      // 注意：底部真正的超链接按钮（id="realDiagnosticBtn"）不做任何额外阻止，自然跳转至百度。
+      // 顶部的预约诊断按钮已经在上面通过锚点平滑滚动处理（因为它的href="#contact"），完美实现：先跳到下方诊断区。
+      // 确保顶部的诊断按钮不会触发任何弹窗。
+      
+      // 另外，为了防止侧边栏菜单中的“预约诊断”也受影响，侧边栏的href="#contact"已经包含在上方锚点逻辑中，也会平滑跳转到下方诊断区，符合预期。
+
+      // 处理页面加载时的锚点
+      if (window.location.hash && window.location.hash.length > 1) {
+        setTimeout(() => {
+          const target = document.querySelector(window.location.hash);
+          if (target) {
+            const navHeight = document.querySelector('.nav')?.offsetHeight || 60;
+            const offsetTop = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+          }
+        }, 200);
+      }
+
+      // 触摸微反馈
+      const tapElements = document.querySelectorAll('.btn, .mobile-menu-btn, .drawer a, .drawer-close, .back-home-btn');
+      tapElements.forEach(el => {
+        el.addEventListener('touchstart', function() {
+          if (this.style) this.style.transform = 'scale(0.97)';
+        }, { passive: true });
+        el.addEventListener('touchend', function() {
+          setTimeout(() => { if (this.style) this.style.transform = ''; }, 100);
+        });
+        el.addEventListener('touchcancel', function() {
+          if (this.style) this.style.transform = '';
+        });
+      });
+
+      // 返回主页按钮：由于已经使用 href="javascript:void(0);"，不会被拦截
+      // 您只需修改上面的 <a> 标签中的 href 属性即可实现跳转，例如 href="index.html"
+      // 注意：上面的锚点平滑跳转逻辑已通过 id="backHomeButton" 排除了此按钮，不会干扰。
+    })();
+  </script>
+</body>
+</html>

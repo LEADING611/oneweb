@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+  <title>领航教育｜初高中化学培优·体系化提分 (优雅手机版)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(135deg, #eaf4ff 0%, #ffffff 38%, #dbeafe 72%, #ffffff 100%);
+      background-attachment: fixed;
+      color: #111827;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* ========== 导航栏 - 完全复用第二个网页风格 (手机端抽屉菜单) ========== */
+    .nav {
+      position: sticky;
+      top: 8px;
+      margin: 0 auto;
+      width: calc(100% - 16px);
+      max-width: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65)) !important;
+      backdrop-filter: saturate(200%) blur(24px) !important;
+      -webkit-backdrop-filter: saturate(200%) blur(24px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.6) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      z-index: 100;
+      overflow: visible;
+      transition: all 0.3s ease;
+    }
+
+    .nav.scrolled {
+      top: 4px;
+      transform: scale(0.98);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.75)) !important;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+    }
+
+    .navin {
+      height: 52px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #f0f4fe;
+    }
+
+    .mobile-menu-btn {
+      display: flex;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 40px;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s ease;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .mobile-menu-btn:active {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(0.96);
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 20px;
+      height: 2.5px;
+      background-color: #1e293b;
+      transition: all 0.25s ease;
+      border-radius: 4px;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 260px;
+      max-width: 75vw;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      box-shadow: -4px 0 32px rgba(0, 0, 0, 0.15);
+      z-index: 1001;
+      transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .drawer-close {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #334155;
+    }
+
+    .drawer-close:active {
+      background: rgba(0, 0, 0, 0.12);
+      transform: scale(0.95);
+    }
+
+    .drawer a {
+      font-size: 20px;
+      font-weight: 500;
+      color: #1e293b;
+      padding: 14px 16px;
+      border-radius: 14px;
+      transition: all 0.2s;
+      margin: 2px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drawer a:active {
+      background: rgba(37, 99, 235, 0.12);
+      color: #2563eb;
+      transform: translateX(4px);
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .drawer-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    body.drawer-open {
+      overflow: hidden;
+    }
+
+    .nav-scroll-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #2563eb, #60a5fa);
+      width: 0%;
+      transition: width 0.05s linear;
+      z-index: 101;
+      border-radius: 0 0 16px 16px;
+    }
+
+    .hero {
+      padding: 60px 0 70px;
+      text-align: center;
+      position: relative;
+    }
+
+    .eyebrow {
+      color: #2563eb;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 7vw, 3.8rem);
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .hero p {
+      max-width: 100%;
+      margin: 0 auto 28px;
+      color: #6e6e73;
+      font-size: 17px;
+      line-height: 1.4;
+      padding: 0 8px;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 16px;
+      display: inline-block;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #0071e3;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25);
+    }
+
+    .primary:active {
+      transform: scale(0.96);
+    }
+
+    .secondary {
+      background: #fff;
+      border: 1px solid #d2d2d7;
+    }
+
+    .secondary:active {
+      background: #f5f5f7;
+      transform: scale(0.96);
+    }
+
+    .section {
+      padding: 60px 0;
+    }
+
+    .title {
+      font-size: 32px;
+      letter-spacing: -0.03em;
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .sub {
+      max-width: 100%;
+      margin: 0 auto 32px;
+      text-align: center;
+      color: #6e6e73;
+      font-size: 16px;
+      line-height: 1.4;
+      padding: 0 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #ffffff, #fbfbfd);
+      border: 1px solid #eef0f3;
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:active {
+      transform: scale(0.98);
+    }
+
+    .element-symbol {
+      font-size: 34px;
+      font-weight: 800;
+      color: #2563eb;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: #4b5563;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .teacher-spotlight {
+      background: linear-gradient(180deg, #ffffff, #fbfbfd);
+      border: 1px solid #eef0f3;
+      border-radius: 28px;
+      padding: 32px 24px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .teacher-avatar {
+      width: 110px;
+      height: 110px;
+      background: linear-gradient(145deg, #d9e9ff, #eef4ff);
+      border-radius: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      color: #2563eb;
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.12);
+      margin: 0 auto;
+    }
+
+    .teacher-info {
+      flex: 1;
+      text-align: left;
+    }
+
+    .teacher-info h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .teacher-info .role {
+      color: #2563eb;
+      font-weight: 600;
+      margin: 8px 0 12px;
+      font-size: 0.9rem;
+    }
+
+    .teacher-info .desc {
+      color: #475569;
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.6;
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 24px;
+    }
+
+    .badge-wrap {
+      margin-top: 28px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge-wrap span {
+      background: #f0f4fe;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .feature-list {
+      background: #fafcff;
+      border-radius: 28px;
+      padding: 32px 24px;
+      border: 1px solid #eef2fa;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      font-size: 1rem;
+    }
+
+    .feature-icon {
+      font-size: 1.8rem;
+      color: #2563eb;
+      min-width: 44px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .contact-card {
+      background: linear-gradient(180deg, #ffffff, #fbfbfd);
+      border-radius: 32px;
+      padding: 48px 24px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+      text-align: center;
+      border: 1px solid #eef0f3;
+    }
+
+    .contact-card h2 {
+      font-size: 30px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .contact-card p {
+      color: #5b6e8c;
+      font-size: 1rem;
+      margin-bottom: 28px;
+    }
+
+    .footer {
+      padding: 28px 16px;
+      color: #64748b;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 20px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .breathWord {
+      display: inline-block;
+      animation: breath 3.6s ease-in-out infinite;
+    }
+
+    @keyframes breath {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(-3px); opacity: 0.85; }
+    }
+
+    .headlineWord {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .headlineWord.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 32px; }
+      .contact-card h2 { font-size: 26px; }
+      .teacher-info { text-align: center; }
+      .teacher-spotlight { flex-direction: column; text-align: center; padding: 28px 20px; }
+      .feature-list { padding: 28px 20px; }
+    }
+
+    /* ========= 返回主页面按钮样式 ========= */
+    .back-home-btn {
+      position: fixed;
+      bottom: 28px;
+      left: 18px;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      backdrop-filter: blur(12px);
+      border-radius: 44px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1002;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-weight: 500;
+      font-size: 14px;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+
+    .back-home-btn:active {
+      transform: scale(0.94);
+      background: #0f172a;
+    }
+
+    @media (max-width: 480px) {
+      .back-home-btn { bottom: 20px; left: 12px; padding: 8px 16px; font-size: 13px; }
+    }
+
+    .back-home-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+      stroke-width: 2.2;
+      fill: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <div class="drawer" id="drawerMenu">
+    <div class="drawer-header">
+      <div class="drawer-close" id="drawerCloseBtn">✕</div>
+    </div>
+    <a href="#course">🧪 课程体系</a>
+    <a href="#teacher">👨‍🔬 王牌师资</a>
+    <a href="#feature">⚛️ 化学特色</a>
+    <a href="#contact">📞 预约诊断</a>
+  </div>
+
+  <nav class="nav" id="mainNav">
+    <div class="nav-scroll-progress" id="scrollProgress"></div>
+    <div class="wrap navin">
+      <div class="logo-area">
+        <img src="图片/2.1.jpg" width="50" height="40" alt="" style="border-radius:10px; object-fit:cover;" />
+        <strong style="font-weight:700;">领航教育</strong>
+      </div>
+      <button class="mobile-menu-btn" id="menuToggleBtn" aria-label="菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow breathWord">✦ 初高中化学高端定制辅导 ✦</div>
+        <h1>
+          <span class="headlineWord">化学提分</span><br>
+          <span class="headlineWord">从"死记硬背"到"融会贯通"</span>
+        </h1>
+        <p>让每一次实验现象，都成为提分抓手</p>
+        <div class="btn-group">
+          <a class="btn primary" href="#contact" id="topDiagnosticLink">预约诊断</a>
+          <a class="btn secondary" href="#course">查看课程详情</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap reveal" id="course">
+      <h2 class="title">领航化学课程</h2>
+      <p class="sub">关于物质变化与底层逻辑的思考</p>
+      <div class="grid">
+        <div class="card"><span class="element-symbol">01</span><h3>领航小组课</h3><p>扫清知识盲点，筑牢化学地基</p></div>
+        <div class="card"><span class="element-symbol">02</span><h3>拓展小组课</h3><p>重构实验逻辑，穿透微观原理</p></div>
+        <div class="card"><span class="element-symbol">03</span><h3>考前冲刺小组课</h3><p>锁定高频考点，精准避开陷阱</p></div>
+        <div class="card"><span class="element-symbol">04</span><h3>一对一精准辅导</h3><p>突破、补弱，因材施教</p></div>
+      </div>
+    </section>
+
+    <section class="section wrap reveal" id="teacher">
+      <h2 class="title">化学核心讲师</h2>
+      <p class="sub">懂化学更懂教学，让复杂原理变得简单</p>
+      <div class="teacher-spotlight">
+        <div class="teacher-avatar">🧪</div>
+        <div class="teacher-info">
+          <h3>傅老师 · 化学首席</h3>
+          <p class="role">18年毕业班教学经验 | 原重点高中化学备课组长</p>
+          <p class="desc">深耕中高考化学十余年，独创"模型化解题+底层逻辑重构"教学法，帮助千名学生突破瓶颈。擅长将抽象概念（摩尔计算、离子反应、有机推断）转化为可视框架，提分率超95%。</p>
+        </div>
+      </div>
+      <div class="badge-wrap">
+        <span>🏅 化学竞赛金牌教练</span>
+        <span>📊 平均提分26+</span>
+        <span>🔬 省级教研成果奖</span>
+      </div>
+    </section>
+
+    <section class="section wrap reveal" id="feature">
+      <h2 class="title">领航化学 · 独家优势</h2>
+      <p class="sub">重构化学思维，杜绝无效记忆</p>
+      <div class="feature-list">
+        <div class="feature-item"><span class="feature-icon">🧩</span><span><strong>全景知识图谱：</strong>将琐碎考点串联成逻辑网，告别死记硬背。</span></div>
+        <div class="feature-item"><span class="feature-icon">⚡</span><span><strong>原创解题模型：</strong>穿透微观反应本质，精准解决实验推断大题。</span></div>
+        <div class="feature-item"><span class="feature-icon">📋</span><span><strong>个性化盲点扫描：</strong>定位思维断层，拒绝无效刷题，每一秒都花在提分点上。</span></div>
+        <div class="feature-item"><span class="feature-icon">📈</span><span><strong>全闭环反馈体系：</strong>课后跟踪督练，确保从"听懂"到"考高分"的真实转化。</span></div>
+      </div>
+    </section>
+
+    <section class="section wrap reveal" id="contact">
+      <div class="contact-card">
+        <h2>预约化学专属诊断</h2>
+        <p>获取：化学薄弱点定位 + 专属提分方案 + 中考/高考考点精析</p>
+        <a class="btn primary" href="3.3.html" target="_blank" rel="noopener noreferrer" style="font-size: 1rem; padding: 12px 32px;" id="realChemDiagnosticBtn">咨询我们 →</a>
+        <p style="margin-top: 30px; color:#7c8ea0; font-size: 0.9rem;">或直接致电：1111-1111 (领航教育)</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="wrap footer">
+    <p>领航教育 © 2026 ｜ 初高中化学培优专家 ｜ 用逻辑征服化学</p>
+  </div>
+
+  <!-- ★ 返回主页面按钮 - 直接在这里填写您的超链接即可正常跳转 ★ -->
+  <!-- 示例：将 href="javascript:void(0);" 替换为 href="index.html" 或您的目标地址 -->
+  <a href="2.html" id="backHomeButton" class="back-home-btn" title="返回主页面">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-8H9v8H4a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    <span>主页</span>
+  </a>
+
+  <script>
+    (function() {
+      const menuBtn = document.getElementById('menuToggleBtn');
+      const drawer = document.getElementById('drawerMenu');
+      const overlay = document.getElementById('drawerOverlay');
+      const closeBtn = document.getElementById('drawerCloseBtn');
+      const body = document.body;
+
+      function openDrawer() { drawer.classList.add('open'); overlay.classList.add('show'); body.classList.add('drawer-open'); }
+      function closeDrawer() { drawer.classList.remove('open'); overlay.classList.remove('show'); body.classList.remove('drawer-open'); }
+      if (menuBtn) menuBtn.addEventListener('click', openDrawer);
+      if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+      if (overlay) overlay.addEventListener('click', closeDrawer);
+      document.querySelectorAll('.drawer a').forEach(link => link.addEventListener('click', closeDrawer));
+
+      const nav = document.getElementById('mainNav');
+      const progressBar = document.getElementById('scrollProgress');
+      function handleScroll() {
+        const y = window.scrollY;
+        if (nav) nav.classList.toggle('scrolled', y > 10);
+        if (progressBar) {
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = docHeight > 0 ? (y / docHeight) * 100 : 0;
+          progressBar.style.width = Math.min(progress, 100) + '%';
+        }
+      }
+      window.addEventListener('scroll', handleScroll);
+      handleScroll();
+
+      setTimeout(() => {
+        document.querySelectorAll('.headlineWord').forEach((w, i) => setTimeout(() => w.classList.add('show'), i * 180));
+      }, 100);
+
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show'); });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+      // 锚点平滑滚动 - 注意：这里排除了返回主页按钮（id="backHomeButton"），避免拦截它的跳转
+      const allAnchors = document.querySelectorAll('a[href^="#"]');
+      allAnchors.forEach(link => {
+        // 排除返回主页按钮，让它可以正常跳转外部链接
+        if (link.id === 'backHomeButton') return;
+        const targetId = link.getAttribute('href');
+        if (targetId === "#" || targetId === "") return;
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const navHeight = document.querySelector('.nav')?.offsetHeight || 60;
+            const offsetTop = targetElement.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            history.pushState(null, null, targetId);
+            if (drawer.classList.contains('open')) closeDrawer();
+          });
+        }
+      });
+
+      if (window.location.hash && window.location.hash.length > 1) {
+        setTimeout(() => {
+          const target = document.querySelector(window.location.hash);
+          if (target) {
+            const navHeight = document.querySelector('.nav')?.offsetHeight || 60;
+            const offsetTop = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+          }
+        }, 200);
+      }
+
+      // 触摸反馈
+      const tapElements = document.querySelectorAll('.btn, .mobile-menu-btn, .drawer a, .drawer-close, .back-home-btn');
+      tapElements.forEach(el => {
+        el.addEventListener('touchstart', function() { if (this.style) this.style.transform = 'scale(0.97)'; }, { passive: true });
+        el.addEventListener('touchend', function() { setTimeout(() => { if (this.style) this.style.transform = ''; }, 100); });
+        el.addEventListener('touchcancel', function() { if (this.style) this.style.transform = ''; });
+      });
+
+      // ========= 返回主页按钮：您可以直接在上面的 href 中填写链接，不会被拦截 =========
+      // 如果您想通过 JS 控制跳转，可以取消下面的注释并填写地址
+      // const backBtn = document.getElementById('backHomeButton');
+      // if (backBtn) {
+      //   backBtn.addEventListener('click', function(e) {
+      //     // 如果 href 已经是有效链接，下面的代码不需要；如果是空链接，可以在这里添加跳转
+      //     // window.location.href = 'index.html';
+      //   });
+      // }
+    })();
+  </script>
+</body>
+</html>
