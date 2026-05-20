@@ -3,12 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
-  <title>领航教育</title>
+  <title>领航教育 | 高端初高中数理化辅导</title>
   <style>
+    /* ========== 全局重置 + 强制禁止水平滚动 ========== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    /* 核心修复：彻底禁止移动端左右滑动/横向溢出 */
+    html, body {
+      overflow-x: hidden !important;
+      width: 100%;
+      max-width: 100%;
+      position: relative;
     }
 
     body {
@@ -19,6 +28,27 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    /* 任何可能导致溢出的容器做强制保护 */
+    .wrap,
+    section,
+    .hero,
+    .nav,
+    .grid,
+    .split,
+    .teacher-card,
+    .panel,
+    .footer {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: middle;
     }
 
     a {
@@ -46,7 +76,6 @@
       border: 1px solid rgba(255, 255, 255, 0.6) !important;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       z-index: 100;
-      /* 关键修复：移除 overflow: hidden，防止内容被裁剪 */
       overflow: visible;
       transition: all 0.3s ease;
     }
@@ -73,12 +102,10 @@
       font-weight: 700;
     }
 
-    /* 桌面端菜单 - 手机上隐藏 */
     .menu {
       display: none;
     }
 
-    /* 手机端汉堡菜单按钮 - 优化触摸区域 */
     .mobile-menu-btn {
       display: flex;
       background: rgba(255, 255, 255, 0.7);
@@ -109,7 +136,6 @@
       border-radius: 4px;
     }
 
-    /* 侧边栏抽屉 - 手机端优化 */
     .drawer {
       position: fixed;
       top: 0;
@@ -203,7 +229,6 @@
       overflow: hidden;
     }
 
-    /* 导航栏装饰动画 - 确保不裁剪内容 */
     .nav:before {
       content: '';
       position: absolute;
@@ -245,7 +270,6 @@
       50% { transform: translateX(60px); }
     }
 
-    /* hero 区域优化 */
     .hero {
       padding: 80px 0 100px;
       background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 56%, #f5f7fa 100%);
@@ -274,6 +298,7 @@
       border-radius: 40px;
       font-weight: 500;
       font-size: 16px;
+      display: inline-block;
     }
 
     .primary {
@@ -363,7 +388,7 @@
       text-align: center;
     }
 
-    /* 师资团队 */
+    /* ===== 师资团队 - 图片完整显示修复（移动端不裁剪）===== */
     .teacher-card {
       background: linear-gradient(180deg, #ffffff, #fbfbfd);
       border: 1px solid #eef0f3;
@@ -378,23 +403,29 @@
       gap: 16px;
     }
 
+    /* 图片容器：使用宽高比 + contain 保证完整显示不裁剪 */
     .teacher-image-box {
       position: relative;
-      height: 220px;
-      border-radius: 16px;
+      width: 100%;
+      aspect-ratio: 3 / 4;          /* 竖幅比例，适合教师肖像，完整展示不压扁 */
+      background: linear-gradient(135deg, #f8faff, #eef2ff);
+      border-radius: 20px;
       overflow: hidden;
-      background: linear-gradient(180deg, #ffffff, #eff6ff);
-      border: 1px solid rgba(147, 197, 253, 0.3);
+      border: 1px solid rgba(147, 197, 253, 0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
     }
 
     .teacher-image-box img {
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      opacity: 0;
+      object-fit: contain;          /* 关键修改：完整显示图片，不裁剪，不变形 */
       transition: opacity 0.4s ease;
+      opacity: 0;
+      background: #ffffff;
+      padding: 8px;                /* 微内边距让图片呼吸，人像更舒适 */
     }
 
     .teacher-image-box img.active {
@@ -510,7 +541,7 @@
       transform: scale(0.97);
     }
 
-    /* 案例图片 */
+    /* 案例图片 (保持原有轮播效果) */
     .fbimg,
     .caseimg {
       position: absolute;
@@ -530,17 +561,7 @@
       transform: translateY(0) scale(1);
     }
 
-    /* 其他小元素 */
-    .orb,
-    .ambient,
-    .liquidGlassTop {
-      display: none;
-    }
-
-    .parallaxLine {
-      display: none;
-    }
-
+    /* 辅助动画与显示 */
     .breathWord {
       display: inline-block;
       animation: breath 3.6s ease-in-out infinite;
@@ -598,7 +619,7 @@
     <div class="nav-scroll-progress" id="scrollProgress"></div>
     <div class="wrap navin">
       <div style="display:flex;align-items:center;gap:10px;">
-        <img src="图片/2.1.jpg" width="50" height="40" alt="" style="border-radius:10px; object-fit:cover;" />
+        <img src="images/2.1.jpg" width="50" height="40" alt="" style="border-radius:10px; object-fit:cover;" />
         <strong style="font-weight:700;"><a href="1.html">领航教育</a></strong>
       </div>
       <button class="mobile-menu-btn" id="menuToggleBtn" aria-label="菜单">
@@ -637,9 +658,10 @@
           <div class="muted">累计辅导学生</div>
         </div>
         <div class="card">
-          <div class="num">地址</div>
-          <div class="muted">校区</div>
-          <div class="muted">什么校区</div>
+          <div class="num">校区</div>
+          <div class="muted">天河区车陂天朗明居工作室</div>
+          <div class="muted">黄埔区永和常春藤工作室</div>
+          <div class="muted">黄埔区永和常春藤工作室</div>
         </div>
       </div>
     </div>
@@ -654,88 +676,88 @@
         <div class="course-card-content">
           <h3>数学提分小组课</h3>
           <p>系统梳理基础到压轴题。</p>
-          <a class="course-btn" href="数学.html">了解数学班 <i>→</i></a>
+          <a class="course-btn" href="sx.html">了解数学班 <i>→</i></a>
         </div>
       </div>
       <div class="card">
         <div class="course-card-content">
           <h3>物理提分小组课</h3>
           <p>模型化教学，突破力学电学。</p>
-          <a class="course-btn" href="物理.html">了解物理班 <i>→</i></a>
+          <a class="course-btn" href="wl.html">了解物理班 <i>→</i></a>
         </div>
       </div>
       <div class="card">
         <div class="course-card-content">
           <h3>化学提分小组课</h3>
           <p>搭建知识体系，稳定提分。</p>
-          <a class="course-btn" href="化学.html">了解化学班 <i>→</i></a>
+          <a class="course-btn" href="hx.html">了解化学班 <i>→</i></a>
         </div>
       </div>
       <div class="card">
         <div class="course-card-content">
           <h3>一对一辅导</h3>
           <p>按薄弱项定制计划。</p>
-          <a class="course-btn" href="一对一.html">预约一对一 <i>→</i></a>
+          <a class="course-btn" href="1d1.html">预约一对一 <i>→</i></a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 师资团队 8位老师轮播 -->
+  <!-- 师资团队 8位老师轮播（图片已优化，完整显示不裁剪） -->
   <section class="section wrap reveal" id="teacher">
     <h2 class="title">高标准师资团队</h2>
     <p class="sub" style="margin-bottom:24px;">严选一线教学名师，平均教龄8年以上</p>
     <div class="teacher-card">
       <div class="teacher-content">
         <div class="teacher-image-box" id="teacherImages">
-          <img class="active" src="图片/teacher3.jpg" alt="郭老师">
-          <img src="图片/teacher4.jpg" alt="吴老师">
-          <img src="图片/teacher2.jpg" alt="傅老师">
-          <img src="图片/teacher1.jpg" alt="赵老师">
-          <img src="图片/teacher5.jpg" alt="陈老师">
-          <img src="图片/teacher6.jpg" alt="林老师">
-          <img src="图片/teacher7.jpg" alt="郑老师">
-          <img src="图片/teacher8.jpg" alt="王老师">
+          <img class="active" src="images/teacher3.jpg" alt="郭老师">
+          <img src="images/teacher8.jpg" alt="李老师">
+          <img src="images/teacher4.jpg" alt="吴老师">
+          <img src="images/teacher7.jpg" alt="陈老师">
+          <img src="images/teacher1.jpg" alt="冷老师">
+          <img src="images/teacher2.jpg" alt="傅老师">
+          <img src="images/teacher6.jpg" alt="张老师">
+          <img src="images/teacher5.jpg" alt="陈老师">
         </div>
         <div>
           <div class="teacher-text-box" id="teacherTexts">
             <div class="teacher-text-item active">
-              <h3>郭老师</h3>
+              <h3>郭睿智</h3>
               <p class="role">数学首席讲师 · 12年教学经验</p>
               <p class="desc">擅长基础薄弱逆袭、压轴题突破、学习习惯建立。累计辅导学生提分率达91%。</p>
             </div>
             <div class="teacher-text-item">
-              <h3>吴老师</h3>
+              <h3>李思颖</h3>
               <p class="role">物理王牌讲师 · 模型教学体系</p>
               <p class="desc">擅长力学、电学、实验题拆解，独创"三步解题法"帮助学生快速建立解题思维。</p>
             </div>
             <div class="teacher-text-item">
-              <h3>傅老师</h3>
+              <h3>吴荣炜</h3>
               <p class="role">化学核心讲师 · 体系化提分</p>
               <p class="desc">擅长知识网络梳理、易错点纠偏、稳定提分训练，学员平均提分25分以上。</p>
             </div>
             <div class="teacher-text-item">
-              <h3>冷老师</h3>
+              <h3>陈立峰</h3>
               <p class="role">物理竞赛教练 · 培优专家</p>
               <p class="desc">专注物理竞赛辅导与尖子生培优，多名学生获省级竞赛奖项。</p>
             </div>
             <div class="teacher-text-item">
-              <h3>陈老师</h3>
+              <h3>冷闻杰</h3>
               <p class="role">数学高级讲师 · 10年毕业班经验</p>
               <p class="desc">专注中高考数学命题研究，擅长压轴题思维训练与应试技巧提升，所带班级平均分提升30+。</p>
             </div>
             <div class="teacher-text-item">
-              <h3>林老师</h3>
+              <h3>傅康</h3>
               <p class="role">物理竞赛金牌教练 · 8年教龄</p>
               <p class="desc">全国物理竞赛优秀指导教师，擅长启发式教学，帮助学生建立物理逻辑思维，学生竞赛获奖率超60%。</p>
             </div>
             <div class="teacher-text-item">
-              <h3>郑老师</h3>
+              <h3>张明远</h3>
               <p class="role">化学学科带头人 · 13年教学经验</p>
               <p class="desc">市级骨干教师，擅长将抽象化学概念可视化，独创“思维导图记忆法”，学员提分率高达95%。</p>
             </div>
             <div class="teacher-text-item">
-              <h3>王老师</h3>
+              <h3>陈思妍</h3>
               <p class="role">数学王牌讲师 · 中考命题研究专家</p>
               <p class="desc">深谙中考数学命题规律，擅长分层教学，帮助不同层次学生突破瓶颈，多名学生考入重点高中。</p>
             </div>
@@ -781,7 +803,7 @@
       <h2 style="font-size:32px;margin-bottom:12px;">预约专属学习诊断</h2>
       <p class="sub" style="margin-bottom:20px;">获取当前成绩分析、薄弱点定位、阶段提分路线图与试听安排。</p>
       <div>
-        <a href="3.html" style="display:inline-block; padding:12px 28px; background:#0071e3; color:#fff; border-radius:40px; font-weight:500;">咨询我们</a>
+        <a href="3.html" style="display:inline-block; padding:12px 28px; background:#0071e3; color:#fff; border-radius:40px; font-weight:500;">咨询我们→</a>
       </div>
     </div>
   </section>
