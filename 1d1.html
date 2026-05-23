@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
   <title>领航教育｜一对一高端辅导·私人定制提分</title>
   <style>
     * {
@@ -10,6 +10,7 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif;
       background: linear-gradient(135deg, #eaf4ff 0%, #ffffff 38%, #dbeafe 72%, #ffffff 100%);
@@ -19,69 +20,188 @@
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
+
     a {
       text-decoration: none;
       color: inherit;
     }
+
     .wrap {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 28px;
+      padding: 0 16px;
     }
 
-    /* 导航栏 —— 保持原有蓝色调与毛玻璃效果 */
+    /* ========= 导航栏（完全模仿sx.html） ========= */
     .nav {
       position: sticky;
-      top: 12px;
-      margin: 0 auto;
-      width: calc(100% - 28px);
-      max-width: 1240px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.42));
-      backdrop-filter: saturate(200%) blur(24px);
-      -webkit-backdrop-filter: saturate(200%) blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.58);
-      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
-      overflow: hidden;
-      transition: all 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
-      z-index: 10;
-    }
-    .nav.scrolled {
       top: 8px;
-      transform: scale(0.985);
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.52));
-      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      margin: 0 auto;
+      width: calc(100% - 16px);
+      max-width: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65)) !important;
+      backdrop-filter: saturate(200%) blur(24px) !important;
+      -webkit-backdrop-filter: saturate(200%) blur(24px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.6) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      z-index: 100;
+      overflow: visible;
+      transition: all 0.3s ease;
     }
+
+    .nav.scrolled {
+      top: 4px;
+      transform: scale(0.98);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.75)) !important;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+    }
+
     .navin {
-      height: 64px;
+      height: 52px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-    .nav strong {
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    .menu {
-      display: flex;
-      gap: 28px;
-      font-size: 12px;
-      color: #424245;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-    }
-    .menu a {
+      padding: 0 12px;
       position: relative;
-      padding: 10px 16px;
-      border-radius: 999px;
+      z-index: 2;
+    }
+
+    .nav strong {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    /* 桌面菜单隐藏，手机汉堡按钮 */
+    .menu {
+      display: none;
+    }
+
+    /* 汉堡按钮 */
+    .mobile-menu-btn {
+      display: flex;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 40px;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s ease;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .mobile-menu-btn:active {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(0.96);
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 20px;
+      height: 2.5px;
+      background-color: #1e293b;
+      transition: all 0.25s ease;
+      border-radius: 4px;
+    }
+
+    /* 侧边栏抽屉 */
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 260px;
+      max-width: 75vw;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      box-shadow: -4px 0 32px rgba(0, 0, 0, 0.15);
+      z-index: 1001;
+      transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .drawer-close {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #334155;
+    }
+
+    .drawer-close:active {
+      background: rgba(0, 0, 0, 0.12);
+      transform: scale(0.95);
+    }
+
+    .drawer a {
+      font-size: 20px;
+      font-weight: 500;
+      color: #1e293b;
+      padding: 14px 16px;
+      border-radius: 14px;
+      transition: all 0.2s;
+      margin: 2px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drawer a:active {
+      background: rgba(37, 99, 235, 0.12);
+      color: #2563eb;
+      transform: translateX(4px);
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
       transition: all 0.3s ease;
     }
-    .menu a:hover {
-      background: rgba(37, 99, 235, 0.08);
-      color: #2563eb;
-      transform: translateY(-1px);
+
+    .drawer-overlay.show {
+      opacity: 1;
+      visibility: visible;
     }
+
+    body.drawer-open {
+      overflow: hidden;
+    }
+
     .nav-scroll-progress {
       position: absolute;
       bottom: 0;
@@ -89,37 +209,38 @@
       height: 2px;
       background: linear-gradient(90deg, #2563eb, #60a5fa);
       width: 0%;
-      transition: width 0.1s linear;
-      z-index: 11;
-      border-radius: 0 0 22px 22px;
+      transition: width 0.05s linear;
+      z-index: 101;
+      border-radius: 0 0 16px 16px;
     }
 
-    /* 英雄区 */
+    /* ========= 英雄区 ========= */
     .hero {
-      padding: 100px 0 80px;
+      padding: 56px 0 48px;
       text-align: center;
       position: relative;
     }
     .eyebrow {
       color: #2563eb;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       margin-bottom: 12px;
       letter-spacing: 0.5px;
     }
     .hero h1 {
-      font-size: clamp(42px, 7vw, 80px);
-      line-height: 1.1;
-      letter-spacing: -0.05em;
-      margin-bottom: 16px;
+      font-size: 38px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
       font-weight: 700;
     }
     .hero p {
-      max-width: 680px;
-      margin: 0 auto 38px;
+      max-width: 100%;
+      margin: 0 auto 28px;
       color: #6e6e73;
-      font-size: 22px;
+      font-size: 17px;
       line-height: 1.4;
+      padding: 0 8px;
     }
     .btn-group {
       display: flex;
@@ -128,85 +249,88 @@
       flex-wrap: wrap;
     }
     .btn {
-      padding: 12px 26px;
-      border-radius: 999px;
+      padding: 12px 22px;
+      border-radius: 40px;
       font-weight: 500;
-      font-size: 17px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      font-size: 16px;
       display: inline-block;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
     }
     .primary {
       background: #0071e3;
       color: #fff;
-      box-shadow: 0 10px 24px rgba(0, 113, 227, 0.22);
+      box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25);
     }
-    .primary:hover {
-      background: #0077ed;
-      transform: scale(1.02);
+    .primary:active {
+      transform: scale(0.96);
     }
     .secondary {
       background: #fff;
       border: 1px solid #d2d2d7;
     }
-    .secondary:hover {
+    .secondary:active {
       background: #f5f5f7;
+      transform: scale(0.96);
     }
 
+    /* ========= 通用区块 ========= */
     .section {
-      padding: 80px 0;
+      padding: 56px 0;
     }
     .title {
-      font-size: clamp(36px, 5vw, 60px);
-      letter-spacing: -0.04em;
+      font-size: 32px;
+      letter-spacing: -0.03em;
       text-align: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       font-weight: 700;
     }
     .sub {
-      max-width: 700px;
-      margin: 0 auto 46px;
+      max-width: 100%;
+      margin: 0 auto 32px;
       text-align: center;
       color: #6e6e73;
-      font-size: 20px;
+      font-size: 16px;
       line-height: 1.4;
+      padding: 0 12px;
     }
 
-    /* 流程步骤 */
+    /* 流程步骤 — 卡片风格 */
     .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-      margin-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
     }
     .step-card {
       background: #ffffff;
       border: 1px solid #eef0f3;
-      border-radius: 28px;
-      padding: 32px 24px;
+      border-radius: 24px;
+      padding: 20px 18px;
       text-align: center;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.04);
-      transition: transform 0.35s ease;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.04);
+      transition: transform 0.2s ease;
     }
-    .step-card:hover {
-      transform: translateY(-6px);
+    .step-card:active {
+      transform: scale(0.98);
     }
     .step-number {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       background: #2563eb;
       color: #fff;
-      border-radius: 50%;
+      border-radius: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 700;
-      margin: 0 auto 16px;
+      margin: 0 auto 12px;
     }
     .step-card h3 {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .step-card p {
       color: #64748b;
@@ -216,17 +340,17 @@
 
     /* 对比卡片 */
     .compare-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
       margin-top: 20px;
     }
     .compare-card {
       background: #ffffff;
       border: 1px solid #eef0f3;
       border-radius: 28px;
-      padding: 32px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.04);
+      padding: 24px 20px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.04);
     }
     .compare-card.negative {
       background: #fef2f2;
@@ -237,9 +361,9 @@
       border-color: #bae6fd;
     }
     .compare-card h3 {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .compare-card ul {
       list-style: none;
@@ -247,220 +371,275 @@
     }
     .compare-card li {
       padding: 8px 0;
-      font-size: 15px;
+      font-size: 14px;
       color: #475569;
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
-    /* 教师卡片 */
+    /* 教师卡片 — 模仿sx师资风格 */
     .teacher-spotlight {
       background: #ffffff;
       border: 1px solid #eef0f3;
-      border-radius: 36px;
-      padding: 40px;
-      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.05);
+      border-radius: 28px;
+      padding: 28px 20px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
       display: flex;
       flex-wrap: wrap;
-      gap: 30px;
+      gap: 20px;
       align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    @media (min-width: 560px) {
+      .teacher-spotlight {
+        text-align: left;
+        justify-content: flex-start;
+      }
     }
     .teacher-avatar {
-      width: 140px;
-      height: 140px;
-      background: linear-gradient(135deg, #dbeafe, #eff6ff);
-      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(145deg, #d9e9ff, #eef4ff);
+      border-radius: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 48px;
       color: #2563eb;
-      box-shadow: 0 15px 30px rgba(37, 99, 235, 0.1);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.12);
+      margin: 0 auto;
     }
     .teacher-info h3 {
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 700;
     }
     .teacher-info .role {
       color: #2563eb;
       font-weight: 600;
-      margin: 6px 0 10px;
+      margin: 6px 0 8px;
+      font-size: 14px;
     }
     .teacher-info .desc {
       color: #475569;
       max-width: 500px;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.6;
+    }
+    .badge-wrap {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .badge-wrap span {
+      background: #f0f4fe;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 500;
     }
 
     /* 保障列表 */
     .guarantee-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
       justify-content: center;
     }
     .guarantee-item {
       background: #ffffff;
       border: 1px solid #eef0f3;
       border-radius: 24px;
-      padding: 28px 24px;
-      min-width: 200px;
-      flex: 1;
+      padding: 20px 10px;
       text-align: center;
-      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.03);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.03);
+      transition: transform 0.2s;
+    }
+    .guarantee-item:active {
+      transform: scale(0.97);
     }
     .guarantee-icon {
-      font-size: 36px;
-      margin-bottom: 12px;
+      font-size: 32px;
+      margin-bottom: 8px;
     }
     .guarantee-item h4 {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       margin-bottom: 6px;
     }
     .guarantee-item p {
       color: #64748b;
-      font-size: 14px;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    /* 预约区块 模仿sx */
+    .contact-panel {
+      background: #ffffff;
+      border-radius: 32px;
+      padding: 40px 24px;
+      text-align: center;
+      border: 1px solid #eef0f3;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+    }
+    .contact-panel h2 {
+      font-size: 28px;
+      margin-bottom: 12px;
     }
 
     .footer {
-      padding: 32px 0;
+      padding: 28px 16px;
       color: #64748b;
       border-top: 1px solid #e5e7eb;
-      margin-top: 40px;
+      margin-top: 20px;
+      font-size: 12px;
       text-align: center;
     }
 
-    /* ========= 返回上一页悬浮按钮 (专用于返回上一个历史记录) ========= */
-    .back-prev-btn {
+    /* 入场动画 */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 呼吸文字效果 */
+    .breathWord {
+      display: inline-block;
+      animation: breath 3.6s ease-in-out infinite;
+    }
+    @keyframes breath {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(-3px); opacity: 0.85; }
+    }
+
+    /* 手机额外优化 */
+    @media (max-width: 560px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+      .contact-panel h2 {
+        font-size: 24px;
+      }
+      .teacher-spotlight {
+        flex-direction: column;
+        text-align: center;
+      }
+      .title {
+        font-size: 28px;
+      }
+      .guarantee-list {
+        gap: 12px;
+      }
+    }
+
+    /* ========= 返回主页面按钮（与sx.html风格一致） ========= */
+    .back-home-btn {
       position: fixed;
       bottom: 28px;
-      right: 28px;
-      width: 54px;
-      height: 54px;
-      background: #1e293b;
-      border-radius: 30px;
+      left: 18px;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      backdrop-filter: blur(12px);
+      border-radius: 44px;
+      padding: 10px 20px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
-      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      opacity: 0;
-      visibility: hidden;
-      transform: scale(0.9);
-      z-index: 99;
+      gap: 8px;
+      z-index: 1002;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      background-color: rgba(30, 41, 59, 0.85);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-weight: 500;
+      font-size: 14px;
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.3px;
     }
-    .back-prev-btn.show {
-      opacity: 1;
-      visibility: visible;
-      transform: scale(1);
-    }
-    .back-prev-btn:hover {
+    .back-home-btn:active {
+      transform: scale(0.94);
       background: #0f172a;
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
-      background-color: #1e293b;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
     }
-    .back-prev-btn:active {
-      transform: scale(0.96);
+    @media (max-width: 480px) {
+      .back-home-btn {
+        bottom: 20px;
+        left: 12px;
+        padding: 8px 16px;
+        font-size: 13px;
+      }
     }
-    /* 返回上一页的箭头图标 (左箭头示意返回) */
-    .back-prev-btn svg {
-      width: 24px;
-      height: 24px;
+    .back-home-btn svg {
+      width: 18px;
+      height: 18px;
       stroke: white;
       stroke-width: 2.2;
       fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+      transition: transform 0.2s ease;
     }
-    /* 为了区分配置，增加一个小的工具提示 (可选悬停显示) */
-    .back-prev-btn::after {
-      content: "返回上一页";
-      position: absolute;
-      right: 62px;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 20px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s;
-      font-weight: 500;
-      backdrop-filter: blur(4px);
-    }
-    .back-prev-btn:hover::after {
-      opacity: 1;
-    }
-
-    /* 新增加第二按钮：但为了避免冲突只用一个返回上一页键，原有的返回顶部分离可选——但为了满足“返回上一页”核心要求，保留右下角独立按钮。 
-       同时用户可能也需要回到顶部，但需求是“返回上一个页面的按键”，所以完全按照需求做：点击后网页后退一页。 
-       并且为了更好的体验，如果无法后退（无历史记录）就给出轻提示或重定向到首页？优雅做法: 判断是否有历史栈 */
-    
-    @media (max-width: 640px) {
-      .wrap { padding: 0 16px; }
-      .menu { display: none; }
-      .compare-grid { grid-template-columns: 1fr; }
-      .teacher-spotlight { flex-direction: column; text-align: center; }
-      .hero h1 { font-size: 36px; }
-      .guarantee-item { min-width: 140px; }
-      .back-prev-btn {
-        bottom: 20px;
-        right: 20px;
-        width: 48px;
-        height: 48px;
-      }
-      .back-prev-btn svg {
-        width: 22px;
-        height: 22px;
-      }
-      .back-prev-btn::after {
-        font-size: 10px;
-        right: 54px;
-      }
+    .back-home-btn:active svg {
+      transform: translateX(-3px);
     }
   </style>
 </head>
 <body>
+
+  <!-- 侧边栏抽屉 -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <div class="drawer" id="drawerMenu">
+    <div class="drawer-header">
+      <div class="drawer-close" id="drawerCloseBtn">✕</div>
+    </div>
+    <a href="#process">📖 辅导流程</a>
+    <a href="#compare">⚖️ 为何选择</a>
+    <a href="#teacher">👨‍🏫 师资匹配</a>
+    <a href="#contact">📞 立即预约</a>
+  </div>
+
+  <!-- 导航栏（完全模仿sx.html） -->
   <nav class="nav" id="mainNav">
     <div class="nav-scroll-progress" id="scrollProgress"></div>
     <div class="wrap navin">
       <div style="display:flex; align-items:center; gap:10px;">
-        <img src="images/2.1.jpg"
-			 alt="" width="65" height="50"/> <strong>领航一对一</strong>
+        <img src="images/2.1.jpg" width="50" height="40" alt="" style="border-radius:10px; object-fit:cover;" />
+        <strong>领航一对一</strong>
       </div>
-      <div class="menu">
-        <a href="#process">辅导流程</a>
-        <a href="#compare">为何选择</a>
-        <a href="#teacher">师资匹配</a>
-        <a href="#contact">立即预约</a>
-      </div>
+      <button class="mobile-menu-btn" id="menuToggleBtn" aria-label="菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
 
+  <!-- Hero 英雄区 -->
   <section class="hero">
     <div class="wrap">
       <div class="eyebrow">&nbsp;</div>
-      <h1>真正的一对一<br>是为每个孩子定制一条路</h1>
+      <h1>
+        <span class="breathWord">真正的一对一</span><br>
+        <span class="breathWord">是为每个孩子定制一条路</span>
+      </h1>
       <p>定制学习方案，解决偏科、听不懂、跟不上</p>
       <div class="btn-group">
-        <a class="btn primary" href="#contact">预约&nbsp;</a>
+        <a class="btn primary" href="#contact">预约诊断</a>
         <a class="btn secondary" href="#process">了解辅导流程</a>
       </div>
     </div>
   </section>
 
-  <section class="section wrap" id="process">
+  <!-- 辅导流程 四步提分法 -->
+  <section class="section wrap reveal" id="process">
     <h2 class="title">一对一辅导 · 四步提分法</h2>
-    <p class="sub">&nbsp;</p>
+    <p class="sub">科学体系 · 高效成长</p>
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-number">1</div>
@@ -485,7 +664,8 @@
     </div>
   </section>
 
-  <section class="section wrap" id="compare">
+  <!-- 对比区块 -->
+  <section class="section wrap reveal" id="compare">
     <h2 class="title">一对一 vs 传统班课</h2>
     <p class="sub">为什么更多家庭选择一对一精准提分？</p>
     <div class="compare-grid">
@@ -504,13 +684,14 @@
           <li>🎯 动态调速，定点击破理科思维断层</li>
           <li>🎯 模型导学，穿透题目本质举一反三</li>
           <li>🎯 全场独宠，每一个解题步骤实时纠偏</li>
-          <li>🎯 闭环督练，确保从“听懂"到“拿高分”</li>
+          <li>🎯 闭环督练，确保从“听懂”到“拿高分”</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section class="section wrap" id="teacher">
+  <!-- 严选教师 -->
+  <section class="section wrap reveal" id="teacher">
     <h2 class="title">严选一对一教师</h2>
     <p class="sub">用严谨的教学闭环与透明的服务质量，对每一位家庭的信任负责。</p>
     <div class="teacher-spotlight">
@@ -518,19 +699,19 @@
       <div class="teacher-info">
         <h3>多学科星级教师团队</h3>
         <p class="role">数学 · 物理 · 化学 | 平均教龄10年+</p>
-        <p class="desc">&nbsp;</p>
+        <p class="desc">精锐师资，专攻中高考重难点，因材施教激发潜能，累计辅导学生提分率超90%。</p>
       </div>
     </div>
-    <div style="margin-top:24px; display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
-      <span style="background:#f1f5f9; padding:8px 20px; border-radius:40px;">🏅 985/211毕业背景</span>
-      <span style="background:#f1f5f9; padding:8px 20px; border-radius:40px;">📋 定期教学考核</span>
-      <span style="background:#f1f5f9; padding:8px 20px; border-radius:40px;">❤️ 擅长学生沟通</span>
+    <div class="badge-wrap">
+      <span>🏅 985/211毕业背景</span>
+      <span>📋 定期教学考核</span>
+      <span>❤️ 擅长学生沟通</span>
     </div>
   </section>
 
-  <section class="section wrap" id="guarantee">
+  <!-- 服务保障 -->
+  <section class="section wrap reveal" id="guarantee">
     <h2 class="title">服务保障</h2>
-   
     <div class="guarantee-list">
       <div class="guarantee-item">
         <div class="guarantee-icon">🔄</div>
@@ -555,14 +736,13 @@
     </div>
   </section>
 
-  <!-- 预约区块：预约按钮已改为直接超链接，无任何弹出效果，直接跳转到指定的“3.4.html”页面（占位页面，用户可替换实际预约链接） 
-       完全符合需求：点击预约按钮直接跳转，无 alert 弹窗或任何确认对话框 -->
-  <section class="section wrap" style="text-align:center;" id="contact">
-    <div style="background:#ffffff; border-radius:38px; padding:50px 30px; box-shadow:0 25px 60px rgba(0,0,0,0.04);">
-      <h2 style="font-size:38px; margin-bottom:16px;">立即预约一对一诊断</h2>
-      <!-- 预约超链接按钮，直接跳转至预约落地页（3.4.html），无弹出效果，无JavaScript拦截 -->
-      <a class="btn primary" href="3.4.html" id="diagnosticBookingBtn" style="font-size:18px; padding:14px 32px;">预约体验 &nbsp;→</a>
-      <p style="margin-top:24px; color:#94a3b8; font-size:14px;">或直接致电：1111-1111 (领航教育)</p>
+  <!-- 预约区块 — 直接跳转3.4.html（无弹窗） -->
+  <section class="section wrap reveal" id="contact">
+    <div class="contact-panel">
+      <h2>立即预约一对一诊断</h2>
+      <p style="color:#64748b; font-size:16px; margin-bottom:24px;">获取成绩分析 · 薄弱点定位 · 提分路线图</p>
+      <a class="btn primary" href="3.4.html" target="_blank" rel="noopener noreferrer" style="font-size:17px; padding:12px 28px;" id="diagnosticBookingBtn">预约体验 →</a>
+      <p style="margin-top:24px; color:#94a3b8; font-size:13px;">或直接致电：1111-1111 (领航教育)</p>
     </div>
   </section>
 
@@ -570,137 +750,120 @@
     领航教育 © 2026 ｜ 初高中数理化一对一高端辅导 ｜ 私人定制，精准提分
   </div>
 
-  <!-- 返回上一个页面的按键 (完全符合需求) -->
-  <div class="back-prev-btn" id="backPrevPageBtn" role="button" aria-label="返回上一个页面">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 返回主页面按钮（模仿sx.html，您可自行修改href） -->
+  <a href="2.html" id="backHomeButton" class="back-home-btn" title="返回主页面">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-8H9v8H4a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
     </svg>
-    <span style="display: none;">返回上一页</span>
-  </div>
+    <span>主页</span>
+  </a>
 
   <script>
     (function() {
-      // 获取元素
+      // 汉堡菜单交互
+      const menuBtn = document.getElementById('menuToggleBtn');
+      const drawer = document.getElementById('drawerMenu');
+      const overlay = document.getElementById('drawerOverlay');
+      const closeBtn = document.getElementById('drawerCloseBtn');
+      const body = document.body;
+
+      function openDrawer() {
+        drawer.classList.add('open');
+        overlay.classList.add('show');
+        body.classList.add('drawer-open');
+      }
+      function closeDrawer() {
+        drawer.classList.remove('open');
+        overlay.classList.remove('show');
+        body.classList.remove('drawer-open');
+      }
+      if (menuBtn) menuBtn.addEventListener('click', openDrawer);
+      if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+      if (overlay) overlay.addEventListener('click', closeDrawer);
+      document.querySelectorAll('.drawer a').forEach(link => link.addEventListener('click', closeDrawer));
+
+      // 滚动进度条 + 导航滚动样式
       const nav = document.getElementById('mainNav');
       const progressBar = document.getElementById('scrollProgress');
-      const backPrevBtn = document.getElementById('backPrevPageBtn');
-      
-      // 滚动效果: 控制导航样式及返回按钮的可见性
       function handleScroll() {
-        const scrollY = window.scrollY;
-        if (nav) {
-          nav.classList.toggle('scrolled', scrollY > 20);
-        }
+        const y = window.scrollY;
+        if (nav) nav.classList.toggle('scrolled', y > 10);
         if (progressBar) {
           const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+          const progress = docHeight > 0 ? (y / docHeight) * 100 : 0;
           progressBar.style.width = Math.min(progress, 100) + '%';
         }
-        // 返回上一页按钮的显隐: 滚动超过120px展示，更加符合直觉
-        if (backPrevBtn) {
-          if (scrollY > 120) {
-            backPrevBtn.classList.add('show');
-          } else {
-            backPrevBtn.classList.remove('show');
-          }
-        }
       }
-      
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll(); // 初始化位置
-      
-      // ========== 核心功能: 返回上一个页面（历史后退），保留原有逻辑不干扰预约按钮 ==========
-      if (backPrevBtn) {
-        backPrevBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          // 使用浏览器历史记录返回上一页功能
-          if (window.history.length > 1) {
-            window.history.back();
-          } else {
-            // 如果没有历史记录，给予轻提示并滚动至顶部优雅降级
-            alert('没有可返回的上一页记录，您可以直接点击导航栏浏览其他内容。');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
+      window.addEventListener('scroll', handleScroll);
+      handleScroll();
+
+      // 滚动显示动画 (reveal)
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('show');
         });
-      }
-      
-      // 原有平滑锚点跳转（增强所有内部锚点链接的偏移效果，保证导航栏不会遮挡内容）
-      const allInternalLinks = document.querySelectorAll('a[href^="#"]');
-      allInternalLinks.forEach(link => {
-        // 排除预约主按钮（预约主按钮是直接跳转外链#contact锚点不影响? 但是#contact段内的锚点需要保留平滑滚动效果，依然保持优雅）
-        // 所有哈希链接都添加平滑滚动，但是为避免冲突，预约区块的按钮是绝对超链接指向3.4.html, 不会执行此处跳转。
-        link.addEventListener('click', function(e) {
-          const targetId = this.getAttribute('href');
-          if (targetId === "#" || targetId === "") return;
-          const targetElement = document.querySelector(targetId);
-          if (targetElement) {
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+      // 所有锚点平滑跳转（内部链接）
+      const allAnchors = document.querySelectorAll('a[href^="#"]');
+      allAnchors.forEach(link => {
+        if (link.id === 'backHomeButton') return;
+        if (link.getAttribute('href') === '#') return;
+        const targetId = link.getAttribute('href');
+        if (targetId === "#") return;
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          link.addEventListener('click', function(e) {
             e.preventDefault();
-            const navHeight = document.querySelector('.nav')?.offsetHeight || 70;
+            const navHeight = document.querySelector('.nav')?.offsetHeight || 60;
             const offsetTop = targetElement.getBoundingClientRect().top + window.scrollY - navHeight - 12;
-            window.scrollTo({
-              top: offsetTop,
-              behavior: 'smooth'
-            });
-            history.pushState(null, null, targetId);
-          }
-        });
-      });
-      
-      // 针对URL初始锚点的处理
-      if (window.location.hash && window.location.hash.length > 1) {
-        setTimeout(() => {
-          const targetElem = document.querySelector(window.location.hash);
-          if (targetElem) {
-            const navHeight = document.querySelector('.nav')?.offsetHeight || 70;
-            const offsetTop = targetElem.getBoundingClientRect().top + window.scrollY - navHeight - 12;
             window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-          }
-        }, 100);
-      }
-      
-      // 预约按钮完全改为原生超链接，无任何 alert 或弹出行为。 
-      // 为了确保绝对没有任何弹出，移除之前绑定的 alert 事件，不对其做任何干预。
-      // 通过 id 获取原有预约按钮，确保移除已有的事件监听（但先前代码中可能没有额外监听）。
-      // 下述代码保证即使遗留有旧的事件，也完全移除了 alert 行为，且不会添加新的弹窗。
+            history.pushState(null, null, targetId);
+            if (drawer.classList.contains('open')) closeDrawer();
+          });
+        }
+      });
+
+      // 预约按钮：彻底清除任何弹窗风险，只保留原生跳转
       const diagBtn = document.getElementById('diagnosticBookingBtn');
       if (diagBtn) {
-        // 移除原有通过 addEventListener 绑定的未知回调（克隆替换方式最简单且彻底清除所有监听）
-        // 防止旧版本代码或其他地方绑定的 alert 依旧生效，采用克隆替换的方式保证无任何 JS 干预，只保留 href 超链接特性。
         const newBtn = diagBtn.cloneNode(true);
         diagBtn.parentNode.replaceChild(newBtn, diagBtn);
-        // 重新保证样式类不变，并且没有任何事件监听（包括click）
-        // 确保 href 属性依然是 3.4.html
         newBtn.setAttribute('href', '3.4.html');
         newBtn.classList.add('btn', 'primary');
-        // 确保没有任何 onclick 内联或存储监听
         newBtn.onclick = null;
-        // 确保没有额外阻止默认行为
         newBtn.addEventListener('click', function(e) {
-          // 让超链接自然跳转，无任何弹窗或 alert，不阻止默认行为。
-          // 完全自然跳转。
+          // 完全自然跳转，无弹窗
         });
       }
-      
-      // 卡片交错入场动画 (原有效果)
-      const animatedElements = document.querySelectorAll('.step-card, .compare-card, .teacher-spotlight, .guarantee-item');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = 1;
-            entry.target.style.transform = 'translateY(0)';
+
+      // 处理页面加载时的锚点
+      if (window.location.hash && window.location.hash.length > 1) {
+        setTimeout(() => {
+          const target = document.querySelector(window.location.hash);
+          if (target) {
+            const navHeight = document.querySelector('.nav')?.offsetHeight || 60;
+            const offsetTop = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
           }
+        }, 200);
+      }
+
+      // 触摸微反馈
+      const tapElements = document.querySelectorAll('.btn, .mobile-menu-btn, .drawer a, .drawer-close, .back-home-btn, .step-card, .guarantee-item');
+      tapElements.forEach(el => {
+        el.addEventListener('touchstart', function() {
+          if (this.style) this.style.transform = 'scale(0.97)';
+        }, { passive: true });
+        el.addEventListener('touchend', function() {
+          setTimeout(() => { if (this.style) this.style.transform = ''; }, 100);
         });
-      }, { threshold: 0.2 });
-      
-      animatedElements.forEach((el, i) => {
-        el.style.opacity = 0;
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = `all 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${i * 0.07}s`;
-        observer.observe(el);
+        el.addEventListener('touchcancel', function() {
+          if (this.style) this.style.transform = '';
+        });
       });
-      
-      // 附加: 因为返回上一页按钮可能触发在无历史场景，完善一点避免移动端误触
     })();
   </script>
 </body>
