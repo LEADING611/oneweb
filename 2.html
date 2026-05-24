@@ -541,24 +541,62 @@
       transform: scale(0.97);
     }
 
-    /* 案例图片 (保持原有轮播效果) */
-    .fbimg,
-    .caseimg {
-      position: absolute;
-      inset: 8px;
-      width: calc(100% - 16px);
-      height: calc(100% - 40px);
-      object-fit: cover;
-      border-radius: 16px;
-      opacity: 0;
-      transform: translateY(16px) scale(0.97);
-      transition: all 0.6s ease;
+    /* ========== 修复案例/反馈图片显示不全 (完整展示 + 轮播适配) ========== */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      height: auto;
+      min-height: 200px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #ffffff, #eff6ff);
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
-    .fbimg.active,
-    .caseimg.active {
+    
+    .carousel-inner {
+      position: relative;
+      width: 100%;
+      padding-bottom: 66%; /* 3:2比例防止跳动 同时保证图片完整区域 */
+      background: #f8fafc;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    
+    .carousel-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;   /* 完整显示图片内容，不裁剪，不变形 */
+      background: #ffffff;
+      transition: opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.5s ease;
+      opacity: 0;
+      transform: scale(0.98);
+      pointer-events: none;
+      border-radius: 16px;
+      padding: 8px;          /* 增加留白，让图片内容呼吸，更完整 */
+    }
+    
+    .carousel-img.active {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: scale(1);
+      pointer-events: auto;
+    }
+    
+    /* 兼容旧版直接样式保留但重构DOM后使用新结构 */
+    .caseimg, .fbimg {
+      /* 保留原有类名以备兼容，但实际新结构不依赖绝对定位溢出的问题 */
+    }
+    
+    /* 保证轮播区域没有任何裁剪风险 */
+    .panel .carousel-container,
+    .panel .carousel-inner {
+      max-width: 100%;
+      overflow: hidden;
     }
 
     /* 辅助动画与显示 */
@@ -598,6 +636,12 @@
     .shineSweep {
       position: relative;
       overflow: hidden;
+    }
+    
+    /* 导航高亮修复 */
+    .drawer a.active-link {
+      background: rgba(37, 99, 235, 0.12);
+      color: #2563eb;
     }
   </style>
 </head>
@@ -703,7 +747,7 @@
     </div>
   </section>
 
-  <!-- 师资团队 8位老师轮播（图片已优化，完整显示不裁剪） -->
+  <!-- 师资团队 8位老师轮播（图片完整显示不裁剪） -->
   <section class="section wrap reveal" id="teacher">
     <h2 class="title">高标准师资团队</h2>
     <p class="sub" style="margin-bottom:24px;">严选一线教学名师，平均教龄8年以上</p>
@@ -722,34 +766,34 @@
         <div>
           <div class="teacher-text-box" id="teacherTexts">
             <div class="teacher-text-item active">
-              <h3>郭睿志</h3>
-              <p class="role">数学首席讲师 · 12年教学经验</p>
+              <h3>郭睿智</h3>
+              <p class="role">首席讲师 · 8年教学经验</p>
               <p class="desc">擅长基础薄弱逆袭、压轴题突破、学习习惯建立。累计辅导学生提分率达91%。</p>
             </div>
             <div class="teacher-text-item">
               <h3>李思颖</h3>
-              <p class="role">物理王牌讲师 · 模型教学体系</p>
+              <p class="role">物理王牌讲师 · 8年教学经验</p>
               <p class="desc">擅长力学、电学、实验题拆解，独创"三步解题法"帮助学生快速建立解题思维。</p>
             </div>
             <div class="teacher-text-item">
               <h3>吴荣炜</h3>
-              <p class="role">化学核心讲师 · 体系化提分</p>
+              <p class="role">核心讲师 · 8年教学经验</p>
               <p class="desc">擅长知识网络梳理、易错点纠偏、稳定提分训练，学员平均提分25分以上。</p>
             </div>
             <div class="teacher-text-item">
               <h3>陈立峰</h3>
-              <p class="role">物理竞赛教练 · 培优专家</p>
+              <p class="role">物理竞赛教练 · 8年教学经验</p>
               <p class="desc">专注物理竞赛辅导与尖子生培优，多名学生获省级竞赛奖项。</p>
             </div>
             <div class="teacher-text-item">
               <h3>冷闻杰</h3>
-              <p class="role">数学高级讲师 · 10年毕业班经验</p>
+              <p class="role">数学高级讲师 · 8年毕业班经验</p>
               <p class="desc">专注中高考数学命题研究，擅长压轴题思维训练与应试技巧提升，所带班级平均分提升30+。</p>
             </div>
             <div class="teacher-text-item">
               <h3>傅康</h3>
-              <p class="role">物理竞赛金牌教练 · 8年教龄</p>
-              <p class="desc">全国物理竞赛优秀指导教师，擅长启发式教学，帮助学生建立物理逻辑思维，学生竞赛获奖率超60%。</p>
+              <p class="role">数学竞赛金牌教练 · 7年教龄</p>
+              <p class="desc">全国数学竞赛优秀指导教师，擅长启发式教学，帮助学生建立数学逻辑思维，学生竞赛获奖率超60%。</p>
             </div>
             <div class="teacher-text-item">
               <h3>张明远</h3>
@@ -758,7 +802,7 @@
             </div>
             <div class="teacher-text-item">
               <h3>陈思妍</h3>
-              <p class="role">数学王牌讲师 · 中考命题研究专家</p>
+              <p class="role">化学王牌讲师 · 8年教学经验</p>
               <p class="desc">深谙中考数学命题规律，擅长分层教学，帮助不同层次学生突破瓶颈，多名学生考入重点高中。</p>
             </div>
           </div>
@@ -777,22 +821,26 @@
     </div>
   </section>
 
-  <!-- 案例与反馈 -->
+  <!-- 案例与反馈 (修复图片显示不完全：重构为object-fit contain + 优雅轮播) -->
   <section class="section wrap split" id="case">
     <div class="panel">
       <h2 style="font-size:24px; margin-bottom:12px;">真实提分案例</h2>
-      <div style="position:relative;height:200px;margin-top:8px;overflow:hidden;border-radius:20px;background:linear-gradient(180deg,#ffffff,#eff6ff);border:1px dashed #93c5fd">
-        <img class="caseimg active" src="图片/case1.jpg" alt="提分案例1">
-        <img class="caseimg" src="图片/case2.jpg" alt="提分案例2">
-        <img class="caseimg" src="图片/case3.jpg" alt="提分案例3">
+      <div class="carousel-container" id="caseCarousel">
+        <div class="carousel-inner">
+          <img class="carousel-img active" src="images/case1.jpg" alt="提分案例1">
+          <img class="carousel-img" src="images/case2.jpg" alt="提分案例2">
+          <img class="carousel-img" src="images/case3.jpg" alt="提分案例3">
+        </div>
       </div>
     </div>
     <div class="panel">
       <h2 style="font-size:24px; margin-bottom:12px;">家长反馈</h2>
-      <div style="position:relative;height:200px;margin-top:8px;overflow:hidden;border-radius:20px;background:linear-gradient(180deg,#ffffff,#eff6ff);border:1px dashed #93c5fd">
-        <img class="fbimg active" src="图片/feedback1.jpg" alt="家长反馈1">
-        <img class="fbimg" src="图片/feedback2.jpg" alt="家长反馈2">
-        <img class="fbimg" src="图片/feedback3.jpg" alt="家长反馈3">
+      <div class="carousel-container" id="feedbackCarousel">
+        <div class="carousel-inner">
+          <img class="carousel-img active" src="images/feedback1.jpg" alt="家长反馈1">
+          <img class="carousel-img" src="images/feedback2.jpg" alt="家长反馈2">
+          <img class="carousel-img" src="images/feedback3.jpg" alt="家长反馈3">
+        </div>
       </div>
     </div>
   </section>
@@ -808,7 +856,7 @@
     </div>
   </section>
 
-  <div class="wrap footer">领航教育 © ｜ 高端初高中数理化辅导品牌 ｜ 电话：11111111</div>
+  <div class="wrap footer">领航数理化 © ｜ 高端初高中数理化辅导品牌 ｜ 电话：18565045810</div>
 
   <script>
     // 汉堡菜单交互
@@ -888,27 +936,21 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // 案例图片轮播
-    let caseImgs = document.querySelectorAll('.caseimg');
-    let caseIdx = 0;
-    if (caseImgs.length) {
+    // 案例轮播(新结构)
+    function initCarousel(containerSelector, intervalTime = 3200) {
+      const container = document.querySelector(containerSelector);
+      if (!container) return;
+      const imgs = container.querySelectorAll('.carousel-img');
+      if (imgs.length === 0) return;
+      let current = 0;
       setInterval(() => {
-        caseImgs[caseIdx].classList.remove('active');
-        caseIdx = (caseIdx + 1) % caseImgs.length;
-        caseImgs[caseIdx].classList.add('active');
-      }, 3200);
+        imgs[current].classList.remove('active');
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add('active');
+      }, intervalTime);
     }
-
-    // 反馈图片轮播
-    let fbImgs = document.querySelectorAll('.fbimg');
-    let fbIdx = 0;
-    if (fbImgs.length) {
-      setInterval(() => {
-        fbImgs[fbIdx].classList.remove('active');
-        fbIdx = (fbIdx + 1) % fbImgs.length;
-        fbImgs[fbIdx].classList.add('active');
-      }, 3400);
-    }
+    initCarousel('#caseCarousel', 3200);
+    initCarousel('#feedbackCarousel', 3400);
 
     // 师资团队轮播
     (function() {
@@ -937,23 +979,21 @@
       start();
     })();
 
-    // 导航高亮
+    // 导航高亮 (优化后显示抽屉内正确高亮)
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.drawer a');
+    const drawerLinks = document.querySelectorAll('.drawer a');
     function updateActiveLink() {
       let currentId = '';
-      const scrollPos = window.scrollY + 80;
+      const scrollPos = window.scrollY + 120;
       sections.forEach(section => {
         const top = section.offsetTop;
         const height = section.offsetHeight;
         if (scrollPos >= top && scrollPos < top + height) currentId = section.getAttribute('id');
       });
-      navLinks.forEach(link => {
-        link.style.background = '';
-        link.style.color = '';
+      drawerLinks.forEach(link => {
+        link.classList.remove('active-link');
         if (link.getAttribute('href') === '#' + currentId) {
-          link.style.background = 'rgba(37, 99, 235, 0.12)';
-          link.style.color = '#2563eb';
+          link.classList.add('active-link');
         }
       });
     }
