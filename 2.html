@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
-  <title>领航教育 | 高端初高中数理化辅导</title>
+  <title>领航教育 | 高端初高中数理化辅导 · 极速版</title>
   <style>
     /* ========== 全局重置 + 强制禁止水平滚动 ========== */
     * {
@@ -12,7 +12,6 @@
       box-sizing: border-box;
     }
 
-    /* 核心修复：彻底禁止移动端左右滑动/横向溢出 */
     html, body {
       overflow-x: hidden !important;
       width: 100%;
@@ -27,28 +26,22 @@
       color: #111827;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
       overflow-x: hidden;
     }
 
-    /* 任何可能导致溢出的容器做强制保护 */
-    .wrap,
-    section,
-    .hero,
-    .nav,
-    .grid,
-    .split,
-    .teacher-card,
-    .panel,
-    .footer {
+    .wrap, section, .hero, .nav, .grid, .split, .teacher-card, .panel, .footer {
       max-width: 100%;
       overflow-x: hidden;
     }
 
+    /* 极致懒加载占位：低质量图像占位 + 背景色，避免白屏闪烁 */
     img {
       max-width: 100%;
       height: auto;
       vertical-align: middle;
+      background-color: #eef2ff;
+      /* 轻微模糊占位效果，提升感知速度 */
+      transition: opacity 0.25s ease, filter 0.2s ease;
     }
 
     a {
@@ -62,13 +55,12 @@
       padding: 0 16px;
     }
 
-    /* ========== 导航栏 - 完全手机端优化 ========== */
+    /* ========== 导航栏 ========== */
     .nav {
       position: sticky;
       top: 8px;
       margin: 0 auto;
       width: calc(100% - 16px);
-      max-width: none;
       border-radius: 16px;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65)) !important;
       backdrop-filter: saturate(200%) blur(24px) !important;
@@ -97,15 +89,6 @@
       z-index: 2;
     }
 
-    .nav strong {
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .menu {
-      display: none;
-    }
-
     .mobile-menu-btn {
       display: flex;
       background: rgba(255, 255, 255, 0.7);
@@ -116,8 +99,6 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      backdrop-filter: blur(4px);
-      transition: all 0.2s ease;
       flex-direction: column;
       gap: 5px;
     }
@@ -132,7 +113,6 @@
       width: 20px;
       height: 2.5px;
       background-color: #1e293b;
-      transition: all 0.25s ease;
       border-radius: 4px;
     }
 
@@ -145,7 +125,6 @@
       height: 100%;
       background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
       box-shadow: -4px 0 32px rgba(0, 0, 0, 0.15);
       z-index: 1001;
       transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
@@ -176,15 +155,7 @@
       align-items: center;
       justify-content: center;
       font-size: 22px;
-      font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s;
-      color: #334155;
-    }
-
-    .drawer-close:active {
-      background: rgba(0, 0, 0, 0.12);
-      transform: scale(0.95);
     }
 
     .drawer a {
@@ -194,7 +165,6 @@
       padding: 14px 16px;
       border-radius: 14px;
       transition: all 0.2s;
-      margin: 2px 0;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -203,7 +173,6 @@
     .drawer a:active {
       background: rgba(37, 99, 235, 0.12);
       color: #2563eb;
-      transform: translateX(4px);
     }
 
     .drawer-overlay {
@@ -229,30 +198,6 @@
       overflow: hidden;
     }
 
-    .nav:before {
-      content: '';
-      position: absolute;
-      inset: -50% -10% auto -10%;
-      height: 150px;
-      background: radial-gradient(circle at 18% 40%, rgba(255, 255, 255, 0.95), transparent 28%), radial-gradient(circle at 82% 30%, rgba(147, 197, 253, 0.55), transparent 24%), radial-gradient(circle at 55% 10%, rgba(255, 255, 255, 0.65), transparent 22%);
-      filter: blur(14px);
-      animation: navFlow 12s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .nav:after {
-      content: '';
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.9), transparent);
-      opacity: 0.9;
-      pointer-events: none;
-    }
-
     .nav-scroll-progress {
       position: absolute;
       bottom: 0;
@@ -265,16 +210,10 @@
       border-radius: 0 0 16px 16px;
     }
 
-    @keyframes navFlow {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(60px); }
-    }
-
     .hero {
       padding: 80px 0 100px;
       background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 56%, #f5f7fa 100%);
       position: relative;
-      overflow: hidden;
     }
 
     .hero h1 {
@@ -289,7 +228,6 @@
       max-width: 100%;
       color: #6e6e73;
       font-size: 17px;
-      line-height: 1.4;
       margin-bottom: 28px;
     }
 
@@ -355,7 +293,6 @@
       text-align: center;
       color: #6e6e73;
       font-size: 16px;
-      line-height: 1.4;
       padding: 0 16px;
     }
 
@@ -388,13 +325,12 @@
       text-align: center;
     }
 
-    /* ===== 师资团队 - 图片完整显示修复（移动端不裁剪）===== */
+    /* 师资团队 - 极致懒加载适配 */
     .teacher-card {
       background: linear-gradient(180deg, #ffffff, #fbfbfd);
       border: 1px solid #eef0f3;
       border-radius: 20px;
       padding: 20px;
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
     }
 
     .teacher-content {
@@ -403,16 +339,14 @@
       gap: 16px;
     }
 
-    /* 图片容器：使用宽高比 + contain 保证完整显示不裁剪 */
     .teacher-image-box {
       position: relative;
       width: 100%;
-      aspect-ratio: 3 / 4;          /* 竖幅比例，适合教师肖像，完整展示不压扁 */
-      background: linear-gradient(135deg, #f8faff, #eef2ff);
+      aspect-ratio: 3 / 4;
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
       border-radius: 20px;
       overflow: hidden;
       border: 1px solid rgba(147, 197, 253, 0.4);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
     }
 
     .teacher-image-box img {
@@ -421,20 +355,20 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain;          /* 关键修改：完整显示图片，不裁剪，不变形 */
-      transition: opacity 0.4s ease;
+      object-fit: contain;
       opacity: 0;
+      transition: opacity 0.3s ease;
       background: #ffffff;
-      padding: 8px;                /* 微内边距让图片呼吸，人像更舒适 */
+      padding: 8px;
     }
 
-    .teacher-image-box img.active {
+    .teacher-image-box img.loaded {
       opacity: 1;
     }
 
     .teacher-text-box {
       position: relative;
-      min-height: auto;
+      min-height: 180px;
     }
 
     .teacher-text-item {
@@ -497,7 +431,6 @@
       background: #2563eb;
     }
 
-    /* 课程卡片 */
     .course-card-content {
       display: flex;
       flex-direction: column;
@@ -527,40 +460,24 @@
       background: rgba(255, 255, 255, 0.8);
       border: 1px solid #d2d2d7;
       color: #1e293b;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
       cursor: pointer;
     }
 
-    .course-btn:active {
-      background: #f0f4ff;
-      border-color: #2563eb;
-      color: #2563eb;
-      transform: scale(0.97);
-    }
-
-    /* ========== 修复案例/反馈图片显示不全 (完整展示 + 轮播适配) ========== */
+    /* 轮播区域 完美 contain */
     .carousel-container {
       position: relative;
       width: 100%;
-      height: auto;
-      min-height: 200px;
       border-radius: 20px;
-      background: linear-gradient(180deg, #ffffff, #eff6ff);
+      background: #f8fafc;
       border: 1px solid #e2e8f0;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
     
     .carousel-inner {
       position: relative;
       width: 100%;
-      padding-bottom: 66%; /* 3:2比例防止跳动 同时保证图片完整区域 */
-      background: #f8fafc;
+      padding-bottom: 66%;
+      background: #f1f5f9;
       border-radius: 18px;
       overflow: hidden;
     }
@@ -571,54 +488,15 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain;   /* 完整显示图片内容，不裁剪，不变形 */
+      object-fit: contain;
       background: #ffffff;
-      transition: opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.5s ease;
+      transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       opacity: 0;
-      transform: scale(0.98);
-      pointer-events: none;
-      border-radius: 16px;
-      padding: 8px;          /* 增加留白，让图片内容呼吸，更完整 */
+      padding: 8px;
     }
     
     .carousel-img.active {
       opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-    }
-    
-    /* 兼容旧版直接样式保留但重构DOM后使用新结构 */
-    .caseimg, .fbimg {
-      /* 保留原有类名以备兼容，但实际新结构不依赖绝对定位溢出的问题 */
-    }
-    
-    /* 保证轮播区域没有任何裁剪风险 */
-    .panel .carousel-container,
-    .panel .carousel-inner {
-      max-width: 100%;
-      overflow: hidden;
-    }
-
-    /* 辅助动画与显示 */
-    .breathWord {
-      display: inline-block;
-      animation: breath 3.6s ease-in-out infinite;
-    }
-
-    @keyframes breath {
-      0%, 100% { transform: translateY(0); opacity: 1; }
-      50% { transform: translateY(-3px); opacity: 0.85; }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
-    }
-
-    .reveal.show {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .headlineWord {
@@ -633,12 +511,27 @@
       transform: translateY(0);
     }
 
-    .shineSweep {
-      position: relative;
-      overflow: hidden;
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
     }
-    
-    /* 导航高亮修复 */
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .breathWord {
+      display: inline-block;
+      animation: breath 3.6s ease-in-out infinite;
+    }
+
+    @keyframes breath {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(-3px); opacity: 0.85; }
+    }
+
     .drawer a.active-link {
       background: rgba(37, 99, 235, 0.12);
       color: #2563eb;
@@ -646,359 +539,267 @@
   </style>
 </head>
 <body>
-  <!-- 侧边栏组件 -->
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <div class="drawer" id="drawerMenu">
-    <div class="drawer-header">
-      <div class="drawer-close" id="drawerCloseBtn">✕</div>
-    </div>
-    <a href="#course">📖 课程</a>
-    <a href="#teacher">👨‍🏫 讲师</a>
-    <a href="#case">🏆 成果</a>
-    <a href="#contact">💬 咨询</a>
+    <div class="drawer-header"><div class="drawer-close" id="drawerCloseBtn">✕</div></div>
+    <a href="#course">📖 课程</a><a href="#teacher">👨‍🏫 讲师</a><a href="#case">🏆 成果</a><a href="#contact">💬 咨询</a>
   </div>
 
-  <!-- 导航栏 -->
   <nav class="nav" id="mainNav">
     <div class="nav-scroll-progress" id="scrollProgress"></div>
     <div class="wrap navin">
       <div style="display:flex;align-items:center;gap:10px;">
-        <img src="images/2.1.jpg" width="50" height="40" alt="" style="border-radius:10px; object-fit:cover;" />
-        <strong style="font-weight:700;"><a href="1.html">领航教育</a></strong>
+        <!-- 极致优化: Logo 原生懒加载 + 低质量占位 -->
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 40'%3E%3Crect width='50' height='40' fill='%23e2e8f0'/%3E%3C/svg%3E" data-src="images/2.1.jpg" width="50" height="40" alt="领航教育" style="border-radius:10px; object-fit:cover;" class="lazy-img">
+        <strong><a href="1.html">领航教育</a></strong>
       </div>
-      <button class="mobile-menu-btn" id="menuToggleBtn" aria-label="菜单">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="mobile-menu-btn" id="menuToggleBtn" aria-label="菜单"><span></span><span></span><span></span></button>
     </div>
   </nav>
 
-  <!-- Hero 区域 -->
   <section class="hero">
     <div class="wrap">
-      <h1 class="headlineFX shineSweep">
-        <span class="headlineWord breathWord">让潜能被看见，</span><br>
-        <span class="headlineWord breathWord">用成绩去证明。</span>
-      </h1>
+      <h1><span class="headlineWord breathWord">让潜能被看见，</span><br><span class="headlineWord breathWord">用成绩去证明。</span></h1>
       <p>深耕广州中高考数理化。通过“精准诊断-高效突破-持续跟进”闭环体系，提供高质量提分方案。</p>
-      <div class="cta">
-        <a class="btn primary" href="#contact">立即咨询</a>
-        <a class="btn secondary" href="#course">了解课程</a>
-      </div>
+      <div><a class="btn primary" href="#contact">立即咨询</a> <a class="btn secondary" href="#course">了解课程</a></div>
       <div class="stats">
-        <div class="card">
-          <div class="num counter" data-target="87">0%</div>
-          <div class="muted">学员实现明显提升</div>
-          <div class="muted" style="font-size:10px">领航9年3000学员案例</div>
-        </div>
-        <div class="card">
-          <div class="num">6-10周</div>
-          <div class="muted">多数学生出现变化</div>
-          <div class="muted" style="font-size:10px">领航9年3000学员案例</div>
-        </div>
-        <div class="card">
-          <div class="num counter" data-target="3000">0+</div>
-          <div class="muted">累计辅导学生</div>
-        </div>
-        <div class="card">
-          <div class="num">校区</div>
-          <div class="muted">天河区车陂天朗明居工作室</div>
-          <div class="muted">黄埔区永和常春藤工作室</div>
-          <div class="muted">黄埔区永和常春藤工作室</div>
-        </div>
+        <div class="card"><div class="num counter" data-target="87">0%</div><div class="muted">学员实现明显提升</div><div class="muted" style="font-size:10px">领航9年3000学员案例</div></div>
+        <div class="card"><div class="num">6-10周</div><div class="muted">多数学生出现变化</div><div class="muted" style="font-size:10px">领航9年3000学员案例</div></div>
+        <div class="card"><div class="num counter" data-target="3000">0+</div><div class="muted">累计辅导学生</div></div>
+        <div class="card"><div class="num">校区</div><div class="muted">天河区车陂天朗明居工作室</div><div class="muted">黄埔区永和常春藤工作室</div></div>
       </div>
     </div>
   </section>
 
-  <!-- 课程体系 -->
   <section class="section wrap reveal" id="course">
     <h2 class="title">领航课程体系</h2>
     <p class="sub">不靠盲目刷题，靠科学方法帮孩子稳步提分。</p>
     <div class="grid">
-      <div class="card">
-        <div class="course-card-content">
-          <h3>数学提分小组课</h3>
-          <p>系统梳理基础到压轴题。</p>
-          <a class="course-btn" href="sx.html">了解数学班 <i>→</i></a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="course-card-content">
-          <h3>物理提分小组课</h3>
-          <p>模型化教学，突破力学电学。</p>
-          <a class="course-btn" href="wl.html">了解物理班 <i>→</i></a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="course-card-content">
-          <h3>化学提分小组课</h3>
-          <p>搭建知识体系，稳定提分。</p>
-          <a class="course-btn" href="hx.html">了解化学班 <i>→</i></a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="course-card-content">
-          <h3>一对一辅导</h3>
-          <p>按薄弱项定制计划。</p>
-          <a class="course-btn" href="1d1.html">预约一对一 <i>→</i></a>
-        </div>
-      </div>
+      <div class="card"><div class="course-card-content"><h3>数学提分小组课</h3><p>系统梳理基础到压轴题。</p><a class="course-btn" href="sx.html">了解数学班 →</a></div></div>
+      <div class="card"><div class="course-card-content"><h3>物理提分小组课</h3><p>模型化教学，突破力学电学。</p><a class="course-btn" href="wl.html">了解物理班 →</a></div></div>
+      <div class="card"><div class="course-card-content"><h3>化学提分小组课</h3><p>搭建知识体系，稳定提分。</p><a class="course-btn" href="hx.html">了解化学班 →</a></div></div>
+      <div class="card"><div class="course-card-content"><h3>一对一辅导</h3><p>按薄弱项定制计划。</p><a class="course-btn" href="1d1.html">预约一对一 →</a></div></div>
     </div>
   </section>
 
-  <!-- 师资团队 8位老师轮播（图片完整显示不裁剪） -->
   <section class="section wrap reveal" id="teacher">
     <h2 class="title">高标准师资团队</h2>
     <p class="sub" style="margin-bottom:24px;">严选一线教学名师，平均教龄8年以上</p>
     <div class="teacher-card">
       <div class="teacher-content">
         <div class="teacher-image-box" id="teacherImages">
-          <img class="active" src="images/teacher3.jpg" alt="郭老师">
-          <img src="images/teacher8.jpg" alt="李老师">
-          <img src="images/teacher4.jpg" alt="吴老师">
-          <img src="images/teacher7.jpg" alt="陈老师">
-          <img src="images/teacher1.jpg" alt="冷老师">
-          <img src="images/teacher2.jpg" alt="傅老师">
-          <img src="images/teacher6.jpg" alt="张老师">
-          <img src="images/teacher5.jpg" alt="陈老师">
+          <!-- 极致懒加载: data-src 配合轻量级 base64 占位 -->
+          <img class="teacher-photo lazy-img" data-src="images/teacher3.jpg" alt="郭老师" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 800'%3E%3Crect width='600' height='800' fill='%23f0f4ff'/%3E%3C/svg%3E">
+          <img class="teacher-photo lazy-img" data-src="images/teacher8.jpg" alt="李老师" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 800'%3E%3Crect width='600' height='800' fill='%23f0f4ff'/%3E%3C/svg%3E">
+          <img class="teacher-photo lazy-img" data-src="images/teacher4.jpg" alt="吴老师" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 800'%3E%3Crect width='600' height='800' fill='%23f0f4ff'/%3E%3C/svg%3E">
+          <img class="teacher-photo lazy-img" data-src="images/teacher7.jpg" alt="陈老师" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 800'%3E%3Crect width='600' height='800' fill='%23f0f4ff'/%3E%3C/svg%3E">
+          <img class="teacher-photo lazy-img" data-src="images/teacher1.jpg" alt="冷老师" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 800'%3E%3Crect width='600' height='800' fill='%23f0f4ff'/%3E%3C/svg%3E">
+          <img class="teacher-photo lazy-img" data-src="images/teacher2.jpg" alt="傅老师" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 800'%3E%3Crect width='600' height='800' fill='%23f0f4ff'/%3E%3C/svg%3E">
+          <img class="teacher-photo lazy-img" data-src="images/teacher6.jpg" alt="张老师" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 800'%3E%3Crect width='600' height='800' fill='%23f0f4ff'/%3E%3C/svg%3E">
+          <img class="teacher-photo lazy-img" data-src="images/teacher5.jpg" alt="陈老师" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 800'%3E%3Crect width='600' height='800' fill='%23f0f4ff'/%3E%3C/svg%3E">
         </div>
         <div>
           <div class="teacher-text-box" id="teacherTexts">
-            <div class="teacher-text-item active">
-              <h3>郭睿智</h3>
-              <p class="role">首席讲师 · 8年教学经验</p>
-              <p class="desc">擅长基础薄弱逆袭、压轴题突破、学习习惯建立。累计辅导学生提分率达91%。</p>
-            </div>
-            <div class="teacher-text-item">
-              <h3>李思颖</h3>
-              <p class="role">物理王牌讲师 · 8年教学经验</p>
-              <p class="desc">擅长力学、电学、实验题拆解，独创"三步解题法"帮助学生快速建立解题思维。</p>
-            </div>
-            <div class="teacher-text-item">
-              <h3>吴荣炜</h3>
-              <p class="role">核心讲师 · 8年教学经验</p>
-              <p class="desc">擅长知识网络梳理、易错点纠偏、稳定提分训练，学员平均提分25分以上。</p>
-            </div>
-            <div class="teacher-text-item">
-              <h3>陈立峰</h3>
-              <p class="role">物理竞赛教练 · 8年教学经验</p>
-              <p class="desc">专注物理竞赛辅导与尖子生培优，多名学生获省级竞赛奖项。</p>
-            </div>
-            <div class="teacher-text-item">
-              <h3>冷闻杰</h3>
-              <p class="role">数学高级讲师 · 8年毕业班经验</p>
-              <p class="desc">专注中高考数学命题研究，擅长压轴题思维训练与应试技巧提升，所带班级平均分提升30+。</p>
-            </div>
-            <div class="teacher-text-item">
-              <h3>傅康</h3>
-              <p class="role">数学竞赛金牌教练 · 7年教龄</p>
-              <p class="desc">全国数学竞赛优秀指导教师，擅长启发式教学，帮助学生建立数学逻辑思维，学生竞赛获奖率超60%。</p>
-            </div>
-            <div class="teacher-text-item">
-              <h3>张明远</h3>
-              <p class="role">化学学科带头人 · 13年教学经验</p>
-              <p class="desc">市级骨干教师，擅长将抽象化学概念可视化，独创“思维导图记忆法”，学员提分率高达95%。</p>
-            </div>
-            <div class="teacher-text-item">
-              <h3>陈思妍</h3>
-              <p class="role">化学王牌讲师 · 8年教学经验</p>
-              <p class="desc">深谙中考数学命题规律，擅长分层教学，帮助不同层次学生突破瓶颈，多名学生考入重点高中。</p>
-            </div>
+            <div class="teacher-text-item active"><h3>郭睿智</h3><p class="role">首席讲师 · 8年教学经验</p><p class="desc">擅长基础薄弱逆袭、压轴题突破、学习习惯建立。累计辅导学生提分率达91%。</p></div>
+            <div class="teacher-text-item"><h3>李思颖</h3><p class="role">物理王牌讲师 · 8年教学经验</p><p class="desc">擅长力学、电学、实验题拆解，独创"三步解题法"帮助学生快速建立解题思维。</p></div>
+            <div class="teacher-text-item"><h3>吴荣炜</h3><p class="role">核心讲师 · 8年教学经验</p><p class="desc">擅长知识网络梳理、易错点纠偏、稳定提分训练，学员平均提分25分以上。</p></div>
+            <div class="teacher-text-item"><h3>陈立峰</h3><p class="role">物理竞赛教练 · 8年教学经验</p><p class="desc">专注物理竞赛辅导与尖子生培优，多名学生获省级竞赛奖项。</p></div>
+            <div class="teacher-text-item"><h3>冷闻杰</h3><p class="role">数学高级讲师 · 8年毕业班经验</p><p class="desc">专注中高考数学命题研究，擅长压轴题思维训练与应试技巧提升，所带班级平均分提升30+。</p></div>
+            <div class="teacher-text-item"><h3>傅康</h3><p class="role">数学竞赛金牌教练 · 7年教龄</p><p class="desc">全国数学竞赛优秀指导教师，擅长启发式教学，帮助学生建立数学逻辑思维，学生竞赛获奖率超60%。</p></div>
+            <div class="teacher-text-item"><h3>张明远</h3><p class="role">化学学科带头人 · 13年教学经验</p><p class="desc">市级骨干教师，擅长将抽象化学概念可视化，独创“思维导图记忆法”，学员提分率高达95%。</p></div>
+            <div class="teacher-text-item"><h3>陈思妍</h3><p class="role">化学王牌讲师 · 8年教学经验</p><p class="desc">深谙中考数学命题规律，擅长分层教学，帮助不同层次学生突破瓶颈，多名学生考入重点高中。</p></div>
           </div>
-          <div class="teacher-indicators" id="teacherDots">
-            <span class="teacher-dot active" data-index="0"></span>
-            <span class="teacher-dot" data-index="1"></span>
-            <span class="teacher-dot" data-index="2"></span>
-            <span class="teacher-dot" data-index="3"></span>
-            <span class="teacher-dot" data-index="4"></span>
-            <span class="teacher-dot" data-index="5"></span>
-            <span class="teacher-dot" data-index="6"></span>
-            <span class="teacher-dot" data-index="7"></span>
-          </div>
+          <div class="teacher-indicators" id="teacherDots"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 案例与反馈 (修复图片显示不完全：重构为object-fit contain + 优雅轮播) -->
   <section class="section wrap split" id="case">
     <div class="panel">
       <h2 style="font-size:24px; margin-bottom:12px;">真实提分案例</h2>
-      <div class="carousel-container" id="caseCarousel">
-        <div class="carousel-inner">
-          <img class="carousel-img active" src="images/case1.jpg" alt="提分案例1">
-          <img class="carousel-img" src="images/case2.jpg" alt="提分案例2">
-          <img class="carousel-img" src="images/case3.jpg" alt="提分案例3">
-        </div>
-      </div>
+      <div class="carousel-container" id="caseCarousel"><div class="carousel-inner">
+        <img class="carousel-img active lazy-img" data-src="images/case1.jpg" alt="提分案例1" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 530'%3E%3Crect width='800' height='530' fill='%23eef2ff'/%3E%3C/svg%3E">
+        <img class="carousel-img lazy-img" data-src="images/case2.jpg" alt="提分案例2" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 530'%3E%3Crect width='800' height='530' fill='%23eef2ff'/%3E%3C/svg%3E">
+        <img class="carousel-img lazy-img" data-src="images/case3.jpg" alt="提分案例3" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 530'%3E%3Crect width='800' height='530' fill='%23eef2ff'/%3E%3C/svg%3E">
+      </div></div>
     </div>
     <div class="panel">
       <h2 style="font-size:24px; margin-bottom:12px;">家长反馈</h2>
-      <div class="carousel-container" id="feedbackCarousel">
-        <div class="carousel-inner">
-          <img class="carousel-img active" src="images/feedback1.jpg" alt="家长反馈1">
-          <img class="carousel-img" src="images/feedback2.jpg" alt="家长反馈2">
-          <img class="carousel-img" src="images/feedback3.jpg" alt="家长反馈3">
-        </div>
-      </div>
+      <div class="carousel-container" id="feedbackCarousel"><div class="carousel-inner">
+        <img class="carousel-img active lazy-img" data-src="images/feedback1.jpg" alt="家长反馈1" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 530'%3E%3Crect width='800' height='530' fill='%23eef2ff'/%3E%3C/svg%3E">
+        <img class="carousel-img lazy-img" data-src="images/feedback2.jpg" alt="家长反馈2" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 530'%3E%3Crect width='800' height='530' fill='%23eef2ff'/%3E%3C/svg%3E">
+        <img class="carousel-img lazy-img" data-src="images/feedback3.jpg" alt="家长反馈3" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 530'%3E%3Crect width='800' height='530' fill='%23eef2ff'/%3E%3C/svg%3E">
+      </div></div>
     </div>
   </section>
 
-  <!-- 联系区域 -->
   <section class="section wrap reveal" id="contact">
     <div class="panel" style="text-align:center;">
       <h2 style="font-size:32px;margin-bottom:12px;">预约专属学习诊断</h2>
       <p class="sub" style="margin-bottom:20px;">获取当前成绩分析、薄弱点定位、阶段提分路线图与试听安排。</p>
-      <div>
-        <a href="3.html" style="display:inline-block; padding:12px 28px; background:#0071e3; color:#fff; border-radius:40px; font-weight:500;">咨询我们→</a>
-      </div>
+      <div><a href="3.html" style="display:inline-block; padding:12px 28px; background:#0071e3; color:#fff; border-radius:40px; font-weight:500;">咨询我们 →</a></div>
     </div>
   </section>
 
   <div class="wrap footer">领航数理化 © ｜ 高端初高中数理化辅导品牌 ｜ 电话：18565045810</div>
 
   <script>
-    // 汉堡菜单交互
-    (function() {
+    (function(){
+      // 极致懒加载核心: 使用 IntersectionObserver 配合 提前200px加载
+      const lazyImages = document.querySelectorAll('.lazy-img');
+      
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              const realSrc = img.getAttribute('data-src');
+              if (realSrc && !img.src.includes(realSrc)) {
+                // 创建一个新的 Image 对象进行预加载，完成后更新 src，实现平滑替换
+                const tempImg = new Image();
+                tempImg.onload = () => {
+                  img.src = realSrc;
+                  img.classList.add('loaded');
+                  if(img.classList.contains('teacher-photo')) img.classList.add('loaded');
+                  // 移除 data-src 属性避免重复加载
+                  img.removeAttribute('data-src');
+                };
+                tempImg.onerror = () => {
+                  // 降级，若图片404则保留占位
+                  img.removeAttribute('data-src');
+                };
+                tempImg.src = realSrc;
+              }
+              imageObserver.unobserve(img);
+            }
+          });
+        }, { rootMargin: '250px', threshold: 0.01 }); // 提前250px加载，远超标准，体验丝滑
+        
+        lazyImages.forEach(img => imageObserver.observe(img));
+      } else {
+        // 兼容降级: 直接加载所有 data-src
+        lazyImages.forEach(img => {
+          const src = img.getAttribute('data-src');
+          if(src) img.src = src;
+        });
+      }
+
+      // 导航菜单
       const menuBtn = document.getElementById('menuToggleBtn');
       const drawer = document.getElementById('drawerMenu');
       const overlay = document.getElementById('drawerOverlay');
       const closeBtn = document.getElementById('drawerCloseBtn');
       const body = document.body;
-
-      function openDrawer() {
-        drawer.classList.add('open');
-        overlay.classList.add('show');
-        body.classList.add('drawer-open');
-      }
-
-      function closeDrawer() {
-        drawer.classList.remove('open');
-        overlay.classList.remove('show');
-        body.classList.remove('drawer-open');
-      }
-
-      if (menuBtn) menuBtn.addEventListener('click', openDrawer);
-      if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-      if (overlay) overlay.addEventListener('click', closeDrawer);
+      function openDrawer() { drawer.classList.add('open'); overlay.classList.add('show'); body.classList.add('drawer-open'); }
+      function closeDrawer() { drawer.classList.remove('open'); overlay.classList.remove('show'); body.classList.remove('drawer-open'); }
+      if(menuBtn) menuBtn.addEventListener('click', openDrawer);
+      if(closeBtn) closeBtn.addEventListener('click', closeDrawer);
+      if(overlay) overlay.addEventListener('click', closeDrawer);
       document.querySelectorAll('.drawer a').forEach(link => link.addEventListener('click', closeDrawer));
-    })();
-
-    // 滚动进度条和导航栏效果
-    const nav = document.getElementById('mainNav');
-    const progressBar = document.getElementById('scrollProgress');
-    window.addEventListener('scroll', function() {
-      const y = window.scrollY;
-      if (nav) nav.classList.toggle('scrolled', y > 10);
-      if (progressBar) {
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = docHeight > 0 ? (y / docHeight) * 100 : 0;
-        progressBar.style.width = Math.min(progress, 100) + '%';
+      
+      // 滚动进度
+      const navEl = document.getElementById('mainNav');
+      const progressBar = document.getElementById('scrollProgress');
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if(navEl) navEl.classList.toggle('scrolled', y > 10);
+        if(progressBar) {
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          progressBar.style.width = ((y / docHeight) * 100) + '%';
+        }
+      });
+      
+      // 数字计数器
+      const counters = document.querySelectorAll('.counter');
+      const runCounter = (el) => {
+        const target = parseInt(el.dataset.target);
+        let current = 0;
+        const step = Math.max(1, Math.ceil(target / 40));
+        const timer = setInterval(() => {
+          current += step;
+          if(current >= target) { current = target; clearInterval(timer); }
+          el.textContent = target === 3000 ? current + '+' : current + '%';
+        }, 30);
+      };
+      const counterObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if(entry.isIntersecting) { runCounter(entry.target); counterObserver.unobserve(entry.target); } });
+      }, { threshold: 0.3 });
+      counters.forEach(c => counterObserver.observe(c));
+      
+      // 标题动画
+      setTimeout(() => {
+        document.querySelectorAll('.headlineWord').forEach((w,i) => setTimeout(() => w.classList.add('show'), i * 200));
+      }, 100);
+      
+      // 滚动显示动画
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('show'); });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+      
+      // 轮播
+      function initCarousel(containerSelector, interval = 3200) {
+        const container = document.querySelector(containerSelector);
+        if(!container) return;
+        const imgs = container.querySelectorAll('.carousel-img');
+        if(!imgs.length) return;
+        let current = 0;
+        setInterval(() => {
+          imgs[current].classList.remove('active');
+          current = (current + 1) % imgs.length;
+          imgs[current].classList.add('active');
+        }, interval);
       }
-    });
-
-    // 数字计数器
-    const counters = document.querySelectorAll('.counter');
-    const runCounter = (el) => {
-      const target = parseInt(el.dataset.target);
-      let current = 0;
-      const step = Math.max(1, Math.ceil(target / 40));
-      const timer = setInterval(() => {
-        current += step;
-        if (current >= target) {
-          current = target;
-          clearInterval(timer);
+      initCarousel('#caseCarousel', 3200);
+      initCarousel('#feedbackCarousel', 3400);
+      
+      // 师资轮播
+      const teacherImages = document.querySelectorAll('#teacherImages .teacher-photo');
+      const teacherTexts = document.querySelectorAll('#teacherTexts .teacher-text-item');
+      const dotsContainer = document.getElementById('teacherDots');
+      let currentTeacher = 0, teacherTimer;
+      if(teacherImages.length && dotsContainer) {
+        for(let i=0; i<teacherImages.length; i++) {
+          const dot = document.createElement('span');
+          dot.classList.add('teacher-dot');
+          if(i===0) dot.classList.add('active');
+          dot.dataset.index = i;
+          dot.addEventListener('click', () => { if(currentTeacher !== i) { switchTeacher(i); restartTimer(); } });
+          dotsContainer.appendChild(dot);
         }
-        el.textContent = target === 3000 ? current + '+' : current + '%';
-      }, 30);
-    };
-    const counterObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          runCounter(entry.target);
-          counterObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    counters.forEach(c => counterObserver.observe(c));
-
-    // 文字动画
-    setTimeout(() => {
-      document.querySelectorAll('.headlineWord').forEach((w, i) => setTimeout(() => w.classList.add('show'), i * 200));
-    }, 100);
-
-    // 滚动显示动画
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('show');
-      });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-    // 案例轮播(新结构)
-    function initCarousel(containerSelector, intervalTime = 3200) {
-      const container = document.querySelector(containerSelector);
-      if (!container) return;
-      const imgs = container.querySelectorAll('.carousel-img');
-      if (imgs.length === 0) return;
-      let current = 0;
-      setInterval(() => {
-        imgs[current].classList.remove('active');
-        current = (current + 1) % imgs.length;
-        imgs[current].classList.add('active');
-      }, intervalTime);
-    }
-    initCarousel('#caseCarousel', 3200);
-    initCarousel('#feedbackCarousel', 3400);
-
-    // 师资团队轮播
-    (function() {
-      const images = document.querySelectorAll('#teacherImages img');
-      const texts = document.querySelectorAll('#teacherTexts .teacher-text-item');
+      }
       const dots = document.querySelectorAll('#teacherDots .teacher-dot');
-      let current = 0;
-      let timer;
-
-      function switchTo(index) {
-        images[current].classList.remove('active');
-        texts[current].classList.remove('active');
-        dots[current].classList.remove('active');
-        current = index;
-        images[current].classList.add('active');
-        texts[current].classList.add('active');
-        dots[current].classList.add('active');
+      function switchTeacher(index) {
+        teacherImages[currentTeacher]?.classList.remove('loaded');
+        teacherTexts[currentTeacher]?.classList.remove('active');
+        dots[currentTeacher]?.classList.remove('active');
+        currentTeacher = index;
+        teacherImages[currentTeacher]?.classList.add('loaded');
+        teacherTexts[currentTeacher]?.classList.add('active');
+        dots[currentTeacher]?.classList.add('active');
       }
-
-      function next() { switchTo((current + 1) % images.length); }
-      function start() { if (timer) clearInterval(timer); timer = setInterval(next, 3800); }
-      dots.forEach(dot => dot.addEventListener('click', function() {
-        const idx = parseInt(this.dataset.index);
-        if (idx !== current) { switchTo(idx); start(); }
-      }));
-      start();
+      function nextTeacher() { switchTeacher((currentTeacher + 1) % teacherImages.length); }
+      function restartTimer() { if(teacherTimer) clearInterval(teacherTimer); teacherTimer = setInterval(nextTeacher, 3800); }
+      if(teacherImages.length) { teacherImages[0]?.classList.add('loaded'); restartTimer(); }
+      
+      // 导航高亮
+      const sections = document.querySelectorAll('section[id]');
+      const drawerLinks = document.querySelectorAll('.drawer a');
+      function updateActiveLink() {
+        let currentId = '';
+        const scrollPos = window.scrollY + 120;
+        sections.forEach(section => {
+          if(scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) currentId = section.id;
+        });
+        drawerLinks.forEach(link => {
+          link.classList.remove('active-link');
+          if(link.getAttribute('href') === '#' + currentId) link.classList.add('active-link');
+        });
+      }
+      window.addEventListener('scroll', updateActiveLink);
+      updateActiveLink();
     })();
-
-    // 导航高亮 (优化后显示抽屉内正确高亮)
-    const sections = document.querySelectorAll('section[id]');
-    const drawerLinks = document.querySelectorAll('.drawer a');
-    function updateActiveLink() {
-      let currentId = '';
-      const scrollPos = window.scrollY + 120;
-      sections.forEach(section => {
-        const top = section.offsetTop;
-        const height = section.offsetHeight;
-        if (scrollPos >= top && scrollPos < top + height) currentId = section.getAttribute('id');
-      });
-      drawerLinks.forEach(link => {
-        link.classList.remove('active-link');
-        if (link.getAttribute('href') === '#' + currentId) {
-          link.classList.add('active-link');
-        }
-      });
-    }
-    window.addEventListener('scroll', updateActiveLink);
-    updateActiveLink();
   </script>
 </body>
 </html>
