@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
   <title>领航教育 | 高端初高中数理化辅导</title>
+  <!-- 预连接到图片资源域（如果图片和页面同域则此行无影响，无副作用） -->
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  <link rel="dns-prefetch" href="//images.unsplash.com" />
   <style>
     /* ========== 全局重置 + 强制禁止水平滚动 ========== */
     * {
@@ -403,12 +406,12 @@
       gap: 16px;
     }
 
-    /* 图片容器：使用宽高比 + contain 保证完整显示不裁剪 */
+    /* 图片容器：使用宽高比 + contain 保证完整显示不裁剪 + 懒加载背景占位 */
     .teacher-image-box {
       position: relative;
       width: 100%;
-      aspect-ratio: 3 / 4;          /* 竖幅比例，适合教师肖像，完整展示不压扁 */
-      background: linear-gradient(135deg, #f8faff, #eef2ff);
+      aspect-ratio: 3 / 4;
+      background: linear-gradient(135deg, #f0f2f5, #e9ecef);
       border-radius: 20px;
       overflow: hidden;
       border: 1px solid rgba(147, 197, 253, 0.4);
@@ -421,11 +424,11 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain;          /* 关键修改：完整显示图片，不裁剪，不变形 */
+      object-fit: contain;
       transition: opacity 0.4s ease;
       opacity: 0;
       background: #ffffff;
-      padding: 8px;                /* 微内边距让图片呼吸，人像更舒适 */
+      padding: 8px;
     }
 
     .teacher-image-box img.active {
@@ -541,7 +544,7 @@
       transform: scale(0.97);
     }
 
-    /* ========== 修复案例/反馈图片显示不全 (完整展示 + 轮播适配) ========== */
+    /* ========== 修复案例/反馈图片显示不全 (完整展示 + 轮播适配 + 懒加载占位) ========== */
     .carousel-container {
       position: relative;
       width: 100%;
@@ -585,11 +588,6 @@
       opacity: 1;
       transform: scale(1);
       pointer-events: auto;
-    }
-    
-    /* 兼容旧版直接样式保留但重构DOM后使用新结构 */
-    .caseimg, .fbimg {
-      /* 保留原有类名以备兼容，但实际新结构不依赖绝对定位溢出的问题 */
     }
     
     /* 保证轮播区域没有任何裁剪风险 */
@@ -643,6 +641,11 @@
       background: rgba(37, 99, 235, 0.12);
       color: #2563eb;
     }
+
+    /* 图片懒加载期间显示柔和背景，避免白屏 */
+    img[lazy="loading"] {
+      background: #f0f2f5;
+    }
   </style>
 </head>
 <body>
@@ -663,7 +666,7 @@
     <div class="nav-scroll-progress" id="scrollProgress"></div>
     <div class="wrap navin">
       <div style="display:flex;align-items:center;gap:10px;">
-        <img src="images/2.1.jpg" width="50" height="40" alt="" style="border-radius:10px; object-fit:cover;" />
+        <img src="images/2.1.jpg" width="50" height="40" alt="" style="border-radius:10px; object-fit:cover;" loading="lazy" />
         <strong style="font-weight:700;"><a href="1.html">领航教育</a></strong>
       </div>
       <button class="mobile-menu-btn" id="menuToggleBtn" aria-label="菜单">
@@ -704,7 +707,6 @@
         <div class="card">
           <div class="num">校区</div>
           <div class="muted">天河区车陂天朗明居工作室</div>
-          <div class="muted">黄埔区永和常春藤工作室</div>
           <div class="muted">黄埔区永和常春藤工作室</div>
         </div>
       </div>
@@ -747,21 +749,21 @@
     </div>
   </section>
 
-  <!-- 师资团队 8位老师轮播（图片完整显示不裁剪） -->
+  <!-- 师资团队 8位老师轮播（图片完整显示不裁剪 + 原生懒加载） -->
   <section class="section wrap reveal" id="teacher">
     <h2 class="title">高标准师资团队</h2>
     <p class="sub" style="margin-bottom:24px;">严选一线教学名师，平均教龄8年以上</p>
     <div class="teacher-card">
       <div class="teacher-content">
         <div class="teacher-image-box" id="teacherImages">
-          <img class="active" src="images/teacher3.jpg" alt="郭老师">
-          <img src="images/teacher8.jpg" alt="李老师">
-          <img src="images/teacher4.jpg" alt="吴老师">
-          <img src="images/teacher7.jpg" alt="陈老师">
-          <img src="images/teacher1.jpg" alt="冷老师">
-          <img src="images/teacher2.jpg" alt="傅老师">
-          <img src="images/teacher6.jpg" alt="张老师">
-          <img src="images/teacher5.jpg" alt="陈老师">
+          <img class="active" src="images/teacher3.jpg" alt="郭老师" loading="lazy">
+          <img src="images/teacher8.jpg" alt="李老师" loading="lazy">
+          <img src="images/teacher4.jpg" alt="吴老师" loading="lazy">
+          <img src="images/teacher7.jpg" alt="陈老师" loading="lazy">
+          <img src="images/teacher1.jpg" alt="冷老师" loading="lazy">
+          <img src="images/teacher2.jpg" alt="傅老师" loading="lazy">
+          <img src="images/teacher6.jpg" alt="张老师" loading="lazy">
+          <img src="images/teacher5.jpg" alt="陈老师" loading="lazy">
         </div>
         <div>
           <div class="teacher-text-box" id="teacherTexts">
@@ -821,15 +823,15 @@
     </div>
   </section>
 
-  <!-- 案例与反馈 (修复图片显示不完全：重构为object-fit contain + 优雅轮播) -->
+  <!-- 案例与反馈 (保留原始图片路径 + 添加懒加载) -->
   <section class="section wrap split" id="case">
     <div class="panel">
       <h2 style="font-size:24px; margin-bottom:12px;">真实提分案例</h2>
       <div class="carousel-container" id="caseCarousel">
         <div class="carousel-inner">
-          <img class="carousel-img active" src="images/case1.jpg" alt="提分案例1">
-          <img class="carousel-img" src="images/case2.jpg" alt="提分案例2">
-          <img class="carousel-img" src="images/case3.jpg" alt="提分案例3">
+          <img class="carousel-img active" src="images/case1.jpg" alt="提分案例1" loading="lazy">
+          <img class="carousel-img" src="images/case2.jpg" alt="提分案例2" loading="lazy">
+          <img class="carousel-img" src="images/case3.jpg" alt="提分案例3" loading="lazy">
         </div>
       </div>
     </div>
@@ -837,9 +839,9 @@
       <h2 style="font-size:24px; margin-bottom:12px;">家长反馈</h2>
       <div class="carousel-container" id="feedbackCarousel">
         <div class="carousel-inner">
-          <img class="carousel-img active" src="images/feedback1.jpg" alt="家长反馈1">
-          <img class="carousel-img" src="images/feedback2.jpg" alt="家长反馈2">
-          <img class="carousel-img" src="images/feedback3.jpg" alt="家长反馈3">
+          <img class="carousel-img active" src="images/feedback1.jpg" alt="家长反馈1" loading="lazy">
+          <img class="carousel-img" src="images/feedback2.jpg" alt="家长反馈2" loading="lazy">
+          <img class="carousel-img" src="images/feedback3.jpg" alt="家长反馈3" loading="lazy">
         </div>
       </div>
     </div>
@@ -936,7 +938,7 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // 案例轮播(新结构)
+    // 案例轮播(保留原图路径)
     function initCarousel(containerSelector, intervalTime = 3200) {
       const container = document.querySelector(containerSelector);
       if (!container) return;
